@@ -7,7 +7,9 @@
     "require": {
         "php": "^8.0.2",
         "arcanedev/log-viewer": "^9.0",
+        "brianmcdo/image-palette": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^2.7",
         "jeroennoten/laravel-adminlte": "^3.8",
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.14.1",

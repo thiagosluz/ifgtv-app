@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Page;
+use App\Models\Publication;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,7 +30,31 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
+            // Add some items to the menu...
+
+//            $event->menu->add([
+//                'text' => 'Blog',
+//                'url' => 'admin/blog',
+//                'icon' => 'fas fa-fw fa-circle',
+//                'label'       => Publication::publicado()->exibir()->count(),
+//                'label_color' => 'danger',
+//            ]);
+
+
+            $items = Page::all()->sortBy('order')->map(function (Page $page) {
+                return [
+                    'text' => $page['text'],
+                    'url' => $page['url'],
+                    'icon' => $page['icon'],
+                    'active' => [$page['url'] .'*', 'regex:@^content/[0-9]+$@'],
+                    'can'  => $page['can'],
+                ];
+            });
+
+            $event->menu->add(...$items);
+
+        });
     }
 
     /**

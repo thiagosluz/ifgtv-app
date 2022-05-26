@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="3600">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>{{ config('adminlte.title') }}</title>
@@ -70,10 +71,7 @@
     </style>
 
     <!-- Navbar -->
-    <nav
-        class="navbar navbar-expand-lg navbar-dark d-none d-lg-block"
-        style="z-index: 2000"
-    >
+    <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" style="z-index: 2000" >
         <div class="container-fluid">
             <!-- Navbar brand -->
             <a class="navbar-brand nav-link" href="{{ route('home') }}">
@@ -96,168 +94,273 @@
     <!-- Navbar -->
 
     <!-- Carousel wrapper -->
-    <div
-        id="introCarousel"
-        class="carousel slide carousel-fade shadow-2-strong"
-        data-mdb-ride="carousel"
-    >
+    <div id="introCarousel" class="carousel slide carousel-fade shadow-2-strong" data-mdb-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
-            <li data-mdb-target="#introCarousel" data-mdb-slide-to="0" class="active"></li>
-            <li data-mdb-target="#introCarousel" data-mdb-slide-to="1"></li>
-            <li data-mdb-target="#introCarousel" data-mdb-slide-to="2"></li>
-            <li data-mdb-target="#introCarousel" data-mdb-slide-to="3"></li>
+
+            @forelse($publications as $publication)
+                <li data-mdb-target="#introCarousel" data-mdb-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
+            @empty
+                <li data-mdb-target="#introCarousel" data-mdb-slide-to="0" class="active"></li>
+            @endforelse
+{{--            <li data-mdb-target="#introCarousel" data-mdb-slide-to="0" class="active"></li>--}}
+{{--            <li data-mdb-target="#introCarousel" data-mdb-slide-to="1"></li>--}}
+{{--            <li data-mdb-target="#introCarousel" data-mdb-slide-to="2"></li>--}}
+{{--            <li data-mdb-target="#introCarousel" data-mdb-slide-to="3"></li>--}}
         </ol>
 
         <!-- Inner -->
         <div class="carousel-inner">
-            <!-- Single item -->
-            <div class="carousel-item active">
-                <video
-                    style="min-width: 100%; min-height: 100%"
-                    playsinline
-                    autoplay
-                    muted
-                    loop
-                >
-                    <source
-                        class="h-100"
-                        src="{{ asset('pag_index/video/teste.mp4') }}"
-                        type="video/mp4"
-                    />
-                </video>
-                <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">
-                    <div
-                        class="d-flex justify-content-center align-items-center h-100"
-                    >
-                        <div class="text-white text-center">
-                            <h1 class="mb-3">Learn Bootstrap 5 with MDB</h1>
-                            <h5 class="mb-4">
-                                Best & free guide of responsive web design
-                            </h5>
-                            <a
-                                class="btn btn-outline-light btn-lg m-2"
-                                href="https://www.youtube.com/watch?v=c9B4TPnak1A"
-                                role="button"
-                                rel="nofollow"
-                                target="_blank"
-                            >Start tutorial</a
-                            >
-                            <a
-                                class="btn btn-outline-light btn-lg m-2"
-                                href="https://mdbootstrap.com/docs/standard/"
-                                target="_blank"
-                                role="button"
-                            >Download MDB UI KIT</a
-                            >
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Single item -->
-            <div class="carousel-item">
-                <video
-                    style="min-width: 100%; min-height: 100%"
-                    playsinline
-                    autoplay
-                    muted
-                    loop
-                >
-                    <source
-                        class="h-100"
-                        src="https://mdbootstrap.com/img/video/forest.mp4"
-                        type="video/mp4"
-                    />
-                </video>
-                <div class="mask" style="background-color: rgba(0, 0, 0, 0.3)">
-                    <div
-                        class="d-flex justify-content-center align-items-center h-100"
-                    >
-                        <div class="text-white text-center">
-                            <h2>You can place here any content</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @forelse($publications as $publication)
 
-            <!-- Single item -->
-            <div class="carousel-item">
-                <video
-                    style="min-width: 100%; min-height: 100%"
-                    playsinline
-                    autoplay
-                    muted
-                    loop
-                >
-                    <source
-                        class="h-100"
-                        src="https://mdbootstrap.com/img/video/Tropical.mp4"
-                        type="video/mp4"
-                    />
-                </video>
-                <div
-                    class="mask"
-                    style="
-                    background: linear-gradient(
-                    45deg,
-                    rgba(29, 236, 197, 0.7),
-                    rgba(91, 14, 214, 0.7) 100%
-                    );
-                    "
-                >
-                    <div class="d-flex justify-content-center align-items-center h-100">
-                        <div class="text-white text-center">
-                            <h2>And cover it with any mask</h2>
-                            <a class="btn btn-outline-light btn-lg m-2" href="https://mdbootstrap.com/docs/standard/content-styles/masks/"
-                                target="_blank" role="button">Learn about masks
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                {{--item com imagem--}}
+                <div class="carousel-item {{ $loop->first ? 'active' : '' }}" data-mdb-interval="{{ config('ifgtv.duracao_slides') }}">
 
-            <div class="carousel-item" data-mdb-interval="10000">
-                <img src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp" class="d-block w-100 h-100" alt="Wild Landscape"/>
+                    @if($publication->tipo == 'imagem')
+                        <img src="{{ asset('publish/tv/' . $publication->imagem ) }}" class="d-block w-100 h-100" alt="Wild Landscape"/>
 
-                <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">
-                    <div class="d-flex justify-content-center align-items-center h-100">
-                        <div class="text-white text-center">
-                            <h2>Título da Noticia</h2>
+                    @elseif($publication->tipo == 'video')
+                                    <!-- Single item -->
 
-                            <div class="card justify-content-center w-100 h-100">
+                        <video
+                            style="min-width: 100%; min-height: 100%"
+                            playsinline
+                            autoplay
+                            muted
+                            loop
+                        >
+                            <source
+                                class="h-100"
+                                src="{{ asset('publish/tv/' . $publication->imagem ) }}"
+                                type="video/mp4"
+                            />
+                        </video>
+{{--                        <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">--}}
+{{--                            <div--}}
+{{--                                class="d-flex justify-content-center align-items-center h-100"--}}
+{{--                            >--}}
+{{--                                <div class="text-white text-center">--}}
+{{--                                    <h1 class="mb-3">Learn Bootstrap 5 with MDB</h1>--}}
+{{--                                    <h5 class="mb-4">--}}
+{{--                                        Best & free guide of responsive web design--}}
+{{--                                    </h5>--}}
+{{--                                    <a--}}
+{{--                                        class="btn btn-outline-light btn-lg m-2"--}}
+{{--                                        href="https://www.youtube.com/watch?v=c9B4TPnak1A"--}}
+{{--                                        role="button"--}}
+{{--                                        rel="nofollow"--}}
+{{--                                        target="_blank"--}}
+{{--                                    >Start tutorial</a--}}
+{{--                                    >--}}
+{{--                                    <a--}}
+{{--                                        class="btn btn-outline-light btn-lg m-2"--}}
+{{--                                        href="https://mdbootstrap.com/docs/standard/"--}}
+{{--                                        target="_blank"--}}
+{{--                                        role="button"--}}
+{{--                                    >Download MDB UI KIT</a--}}
+{{--                                    >--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+
+
+                    @elseif($publication->tipo == 'texto')
+
+                    <img src="{{ asset('publish/tv/modelo4.png' ) }}" class="d-block w-100 h-100" alt="Wild Landscape"/>
+                    <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)">
+                        <div class="d-flex justify-content-center align-items-center h-100">
+
+{{--                            <div class="text-white text-center">--}}
+{{--                                <h1>{{ $publication->titulo }}</h1>--}}
+
+{{--                                <div class="card justify-content-center w-100 h-100 text-black">--}}
+{{--                                    <div class="card-body">--}}
+{{--                                        <h3>{!! $publication->texto !!}</h3>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+                            <div class="card" style="width: 60rem;">
                                 <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text text-black">Some quick example text to
-                                        build on the card title and make up the bulk
-                                        build on the card title and makeup the bulk
-                                        build on the card title and make up the bulk
-                                        of the card's content.build on the card title and make up the bulk
-                                        build on the card title and makeup the bulk
-                                        build on the card title and make up the bulk
-                                        of the card's content.build on the card title and make up the bulk
-                                        build on the card title and makeup the bulk
-                                        build on the card title and make up the bulk
-                                        of the card's content.
-                                    </p>
+                                    <h2 class="card-title">{{ $publication->titulo }}</h2>
+{{--                                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>--}}
+                                    <h4>
+                                        {!! $publication->texto !!}
+                                    </h4>
 
-                                    <p class="card-text text-black">Some quick example text to
-                                        build on the card title and make up the bulk
-                                        build on the card title and makeup the bulk
-                                        build on the card title and make up the bulk
-                                        of the card's content.
-                                    </p>
-                                    <button type="button" class="btn btn-primary">Button</button>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
+                    @endif
+
                 </div>
 
+            @empty
+                <div class="carousel-item active" data-mdb-interval="{{ config('ifgtv.duracao_slides') }}">
+                    <video
+                        style="min-width: 100%; min-height: 100%"
+                        playsinline
+                        autoplay
+                        muted
+                        loop
+                    >
+                        <source class="h-100" src="{{ asset('publish/tv/video_modelo.mp4' ) }}" type="video/mp4" />
+                    </video>
+                </div>
+            @endforelse
 
 
-            </div>
+{{--            <!-- Single item -->--}}
+{{--            <div class="carousel-item active">--}}
+{{--                <video--}}
+{{--                    style="min-width: 100%; min-height: 100%"--}}
+{{--                    playsinline--}}
+{{--                    autoplay--}}
+{{--                    muted--}}
+{{--                    loop--}}
+{{--                >--}}
+{{--                    <source--}}
+{{--                        class="h-100"--}}
+{{--                        src="{{ asset('pag_index/video/teste.mp4') }}"--}}
+{{--                        type="video/mp4"--}}
+{{--                    />--}}
+{{--                </video>--}}
+{{--                <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">--}}
+{{--                    <div--}}
+{{--                        class="d-flex justify-content-center align-items-center h-100"--}}
+{{--                    >--}}
+{{--                        <div class="text-white text-center">--}}
+{{--                            <h1 class="mb-3">Learn Bootstrap 5 with MDB</h1>--}}
+{{--                            <h5 class="mb-4">--}}
+{{--                                Best & free guide of responsive web design--}}
+{{--                            </h5>--}}
+{{--                            <a--}}
+{{--                                class="btn btn-outline-light btn-lg m-2"--}}
+{{--                                href="https://www.youtube.com/watch?v=c9B4TPnak1A"--}}
+{{--                                role="button"--}}
+{{--                                rel="nofollow"--}}
+{{--                                target="_blank"--}}
+{{--                            >Start tutorial</a--}}
+{{--                            >--}}
+{{--                            <a--}}
+{{--                                class="btn btn-outline-light btn-lg m-2"--}}
+{{--                                href="https://mdbootstrap.com/docs/standard/"--}}
+{{--                                target="_blank"--}}
+{{--                                role="button"--}}
+{{--                            >Download MDB UI KIT</a--}}
+{{--                            >--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+
+{{--            <!-- Single item -->--}}
+{{--            <div class="carousel-item">--}}
+{{--                <video--}}
+{{--                    style="min-width: 100%; min-height: 100%"--}}
+{{--                    playsinline--}}
+{{--                    autoplay--}}
+{{--                    muted--}}
+{{--                    loop--}}
+{{--                >--}}
+{{--                    <source--}}
+{{--                        class="h-100"--}}
+{{--                        src="https://mdbootstrap.com/img/video/forest.mp4"--}}
+{{--                        type="video/mp4"--}}
+{{--                    />--}}
+{{--                </video>--}}
+{{--                <div class="mask" style="background-color: rgba(0, 0, 0, 0.3)">--}}
+{{--                    <div--}}
+{{--                        class="d-flex justify-content-center align-items-center h-100"--}}
+{{--                    >--}}
+{{--                        <div class="text-white text-center">--}}
+{{--                            <h2>You can place here any content</h2>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+
+{{--            <!-- Single item -->--}}
+{{--            <div class="carousel-item">--}}
+{{--                <video--}}
+{{--                    style="min-width: 100%; min-height: 100%"--}}
+{{--                    playsinline--}}
+{{--                    autoplay--}}
+{{--                    muted--}}
+{{--                    loop--}}
+{{--                >--}}
+{{--                    <source--}}
+{{--                        class="h-100"--}}
+{{--                        src="https://mdbootstrap.com/img/video/Tropical.mp4"--}}
+{{--                        type="video/mp4"--}}
+{{--                    />--}}
+{{--                </video>--}}
+{{--                <div--}}
+{{--                    class="mask"--}}
+{{--                    style="--}}
+{{--                    background: linear-gradient(--}}
+{{--                    45deg,--}}
+{{--                    rgba(29, 236, 197, 0.7),--}}
+{{--                    rgba(91, 14, 214, 0.7) 100%--}}
+{{--                    );--}}
+{{--                    "--}}
+{{--                >--}}
+{{--                    <div class="d-flex justify-content-center align-items-center h-100">--}}
+{{--                        <div class="text-white text-center">--}}
+{{--                            <h2>And cover it with any mask</h2>--}}
+{{--                            <a class="btn btn-outline-light btn-lg m-2" href="https://mdbootstrap.com/docs/standard/content-styles/masks/"--}}
+{{--                                target="_blank" role="button">Learn about masks--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+
+{{--            <div class="carousel-item" data-mdb-interval="10000">--}}
+{{--                <img src="{{ asset('publish/tv/estab_1653327940.png') }}" class="d-block w-100 h-100" alt="Wild Landscape"/>--}}
+
+{{--                <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">--}}
+{{--                    <div class="d-flex justify-content-center align-items-center h-100">--}}
+{{--                        <div class="text-white text-center">--}}
+{{--                            <h2>Título da Noticia</h2>--}}
+
+{{--                            <div class="card justify-content-center w-100 h-100">--}}
+{{--                                <div class="card-body">--}}
+{{--                                    <h5 class="card-title">Card title</h5>--}}
+{{--                                    <p class="card-text text-black">Some quick example text to--}}
+{{--                                        build on the card title and make up the bulk--}}
+{{--                                        build on the card title and makeup the bulk--}}
+{{--                                        build on the card title and make up the bulk--}}
+{{--                                        of the card's content.build on the card title and make up the bulk--}}
+{{--                                        build on the card title and makeup the bulk--}}
+{{--                                        build on the card title and make up the bulk--}}
+{{--                                        of the card's content.build on the card title and make up the bulk--}}
+{{--                                        build on the card title and makeup the bulk--}}
+{{--                                        build on the card title and make up the bulk--}}
+{{--                                        of the card's content.--}}
+{{--                                    </p>--}}
+
+{{--                                    <p class="card-text text-black">Some quick example text to--}}
+{{--                                        build on the card title and make up the bulk--}}
+{{--                                        build on the card title and makeup the bulk--}}
+{{--                                        build on the card title and make up the bulk--}}
+{{--                                        of the card's content.--}}
+{{--                                    </p>--}}
+{{--                                    <button type="button" class="btn btn-primary">Button</button>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+{{--                </div>--}}
+
+
+
+{{--            </div>--}}
 
         </div>
         <!-- Inner -->
@@ -273,6 +376,8 @@
         </a>
     </div>
     <!-- Carousel wrapper -->
+
+
 </header>
 <!--Main Navigation-->
 

@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\IndexController::class, 'index']);
 
 Auth::routes();
 
@@ -25,6 +23,12 @@ Route::prefix('admin')->group(function () {
     Route::resource('users', App\Http\Controllers\UserController::class);
     Route::resource('roles', App\Http\Controllers\RoleController::class);
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
+    Route::resource('pages', App\Http\Controllers\PageController::class);
+    Route::post('pages/order', [App\Http\Controllers\PageController::class, 'order'])->name('pages.order');
 });
+
+Route::resource('publications', App\Http\Controllers\PublicationController::class);
+Route::get('publications/previa/{publications}', [App\Http\Controllers\PublicationController::class, 'previa'])->name('publications.previa');
+Route::post('publications/publicar/{publications}', [App\Http\Controllers\PublicationController::class, 'post'])->name('publications.publicar');
 
 

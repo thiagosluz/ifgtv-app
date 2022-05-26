@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>IFG</b>TV',
+    'logo' => '<b>IFG</b>.TV',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -226,49 +226,11 @@ return [
 
     'menu' => [
 
-        [
-            'text' => 'Dashboard',
-            'url'  => 'home',
-            'icon' => 'fas fa-fw fa-tachometer-alt',
-        ],
-
-        ['header' => 'Super Admin','can' => 'super-admin'],
-
-        [
-            'text' => 'Users',
-            'url'  => 'admin/users',
-            'icon' => 'fas fa-fw fa-users',
-            'active' => ['admin/users*', 'regex:@^content/[0-9]+$@'],
-            'can'  => 'users-list',
-        ],
-
-        [
-            'text' => 'Roles',
-            'url'  => 'admin/roles',
-            'icon' => 'fas fa-fw fa-user-tag',
-            'active' => ['admin/roles*', 'regex:@^content/[0-9]+$@'],
-            'can'  => 'roles-list',
-        ],
-
-        [
-            'text' => 'Permissions',
-            'url'  => 'admin/permissions',
-            'icon' => 'fas fa-fw fa-user-lock',
-            'active' => ['admin/permissions*', 'regex:@^content/[0-9]+$@'],
-            'can'  => 'permissions-list',
-        ],
-
-        [
-            'text' => 'Logs',
-            'url'  => 'log-viewer',
-            'icon' => 'fas fa-fw fa-bug',
-            'active' => ['log-viewer*', 'regex:@^content/[0-9]+$@'],
-            'can'  => 'super-admin',
-        ],
-
-
-
-
+//        [
+//            'text' => 'Dashboard',
+//            'url'  => 'home',
+//            'icon' => 'fas fa-fw fa-tachometer-alt',
+//        ],
 
 
         // Navbar items:

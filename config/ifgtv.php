@@ -15,6 +15,7 @@ return [
         'altura' => 590,
         'largura' => 1200,
     ],
+    
 
     'duracao_slides' => 10000,
 

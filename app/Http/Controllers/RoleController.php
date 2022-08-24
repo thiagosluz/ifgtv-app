@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Log;
 
 class RoleController extends Controller
 {
+    //    construtor com permissão de acesso
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:roles-list|roles-create|roles-edit|roles-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:roles-create')->only(['create', 'store']);
+        $this->middleware('permission:roles-edit')->only(['edit', 'update']);
+        $this->middleware('permission:roles-delete')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *

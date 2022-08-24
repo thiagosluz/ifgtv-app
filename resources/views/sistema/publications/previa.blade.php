@@ -1,183 +1,175 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>{{ config('adminlte.title') }}</title>
-    <!-- MDB icon -->
-    {{-- favicon --}}
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-    <link rel="mask-icon" href="{{ asset('safari-pinned-tab.svg') }}" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('pag_index/fontawesome/css/all.min.css') }}" />
-    <!-- Google Fonts Roboto -->
-    <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
-    <!-- MDB -->
-    <link rel="stylesheet" href="{{ asset('pag_index/css/mdb.min.css') }}" />
+    <title></title>
+    <meta charset="utf-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #main {
+            width: 1280px;
+            height: 680px;
+            background: #F0F0F0;
+            padding-top: 40px;
+            overflow: hidden;
+        }
+
+        #news-panel {
+            width: 1200px;
+            height: 590px;
+            box-shadow: 0px 5px 5px black;
+            margin: 0 auto;
+        }
+
+        #pagination {
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        #pagination li {
+            display: inline-block;
+            border: 5px solid #4D4D4D;
+            border-radius: 50%;
+            width: 43px;
+            height: 43px;
+            line-height: 43px;
+            font-size: 20pt;
+            font-weight: bold;
+            color: #4D4D4D;
+            box-shadow: 0px 3px 6px black;
+            margin-left: 20px;
+        }
+
+        #pagination .first {
+            margin-left: 0;
+        }
+
+        #pagination .selected {
+            background: #B3B3B3;
+        }
+
+        #news-panel .image-news, #news-panel .textual-news {
+            width: 1200px;
+            height: 590px;
+            display: none;
+
+        }
+
+        #news-panel .visible {
+            display: block;
+        }
+
+        .textual-news {
+            background:url("{{ asset('publish/tv/modelo5.png')  }}");
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .textual-news .title {
+            font-size: 33pt;
+            color: #4D4D4D;
+            font-weight: bold;
+            margin-bottom: 40px;
+            padding-top: 84px;
+        }
+
+        .textual-news .container {
+            overflow: hidden;
+        }
+
+
+        .textual-news .text {
+            margin-left: 40px;
+            margin-right: 40px;
+        }
+
+    </style>
 </head>
 <body>
-<!-- Start your project here-->
 
-<!--Main Navigation-->
-<header>
-    <style>
-        /* Carousel styling */
-        #introCarousel,
-        .carousel-inner,
-        .carousel-item,
-        .carousel-item.active {
-            height: 100vh;
-        }
+{{--botão de voltar--}}
+<a href="{{ route('publications.show', $publication->id) }}" class="btn btn-primary">Voltar</a>
 
-        .carousel-item:nth-child(1) {
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center center;
-        }
+<div id="main">
 
-        .carousel-item:nth-child(2) {
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center center;
-        }
+    <div id="news-panel">
 
-        .carousel-item:nth-child(3) {
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center center;
-        }
 
-        /* Height for devices larger than 576px */
-        @media (min-width: 992px) {
-            #introCarousel {
-                margin-top: -58.59px;
-            }
-        }
-
-        .navbar .nav-link {
-            color: #fff !important;
-        }
-    </style>
-
-    <!-- Navbar -->
-    <nav
-        class="navbar navbar-expand-lg navbar-dark d-none d-lg-block"
-        style="z-index: 2000"
-    >
-        <div class="container-fluid">
-            <!-- Navbar brand -->
-            <a class="navbar-brand nav-link" href="{{ route('publications.show', $publication->id) }}">
-                <strong>VOLTAR</strong>
-            </a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-mdb-toggle="collapse"
-                data-mdb-target="#navbarExample01"
-                aria-controls="navbarExample01"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <i class="fas fa-bars"></i>
-            </button>
-
-        </div>
-    </nav>
-    <!-- Navbar -->
-
-    <!-- Carousel wrapper -->
-    <div
-        id="introCarousel"
-        class="carousel slide carousel-fade shadow-2-strong"
-        data-mdb-ride="carousel"
-    >
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-                <li data-mdb-target="#introCarousel" data-mdb-slide-to="0" class="active"></li>
-        </ol>
-
-        <!-- Inner -->
-        <div class="carousel-inner">
-
-                {{--item com imagem--}}
-                <div class="carousel-item active" data-mdb-interval="10000">
-
-                    @if($publication->tipo == 'imagem')
-                        <img src="{{ asset('publish/tv/' . $publication->imagem ) }}" class="d-block w-100 h-100" alt="Wild Landscape"/>
-
-                    @elseif($publication->tipo == 'video')
-                                    <!-- Single item -->
-
-                        <video
-                            style="min-width: 100%; min-height: 100%"
-                            playsinline
-                            autoplay
-                            muted
-                            loop
-                        >
-                            <source
-                                class="h-100"
-                                src="{{ asset('publish/tv/' . $publication->imagem ) }}"
-                                type="video/mp4"
-                            />
-                        </video>
-
-                    @elseif($publication->tipo == 'texto')
-
-                    <img src="{{ asset('publish/tv/modelo4.png' ) }}" class="d-block w-100 h-100" alt="Wild Landscape"/>
-                    <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)">
-                        <div class="d-flex justify-content-center align-items-center h-100">
-                            <div class="text-white text-center">
-                                <h1>{{ $publication->titulo }}</h1>
-
-                                <div class="card justify-content-center w-100 h-100 text-black">
-                                    <div class="card-body">
-                                        <h3>{!! $publication->texto !!}</h3>
-                                    </div>
-                                </div>
-                            </div>
+            @if($publication->tipo === 'imagem')
+                <img class="image-news" src="{{ asset('publish/tv/' . $publication->imagem)  }} " />
+            @elseif($publication->tipo === 'texto')
+                <div class="textual-news">
+                    <div class="container">
+                        <div class="text">
+                            <div class="title">{{ $publication->titulo }}</div>
+                            <div class="text">{!! $publication->texto !!}</div>
                         </div>
                     </div>
-
-                    @endif
-
                 </div>
+            @endif
 
 
-
-        </div>
-        <!-- Inner -->
-
-        <!-- Controls -->
-        <a class="carousel-control-prev" href="#introCarousel" role="button" data-mdb-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#introCarousel" role="button" data-mdb-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
-    <!-- Carousel wrapper -->
-</header>
-<!--Main Navigation-->
+    <ul id="pagination"><!-- pagination goes here --></ul>
+</div>
+<script>
+
+    // Configurações
+    var secondsPerPage = 300; // tempo em segundos para cada página
+    var pages = $("news-panel").children.length;
 
 
-<!-- End your project here-->
+    // Função básica de seleção de elementos por ID
+    function $ (elementId) {
+        return document.getElementById(elementId);
+    }
 
-<!-- MDB -->
-<script type="text/javascript" src="{{ asset('pag_index/js/mdb.min.js') }}"></script>
-<!-- Custom scripts -->
-<script type="text/javascript"></script>
+    // Inicialização dos elementos tratados como notícias/páginas
+    for (var i = 0; i < pages; i++)
+        $("news-panel").children[i].id = "news-" + (i + 1)
+
+
+    // Paginação
+    for (var i = 1; i <= pages; i++)
+        $("pagination").innerHTML += "<li id=\"pg-" + i + "\" onclick=\"showNews(" + i + ")\">" + i + "</li>\n";
+
+    // Função que exibe uma notícia. Substitui a notícia corrente pela notícia especificada
+    function showNews(number) {
+        var newsPanel = $('news-panel');
+        newsPanel.getElementsByClassName('visible')[0].classList.remove('visible');
+        $('news-' + number).classList.add('visible');
+
+        var pagination = $('pagination');
+        pagination.getElementsByClassName('selected')[0].classList.remove('selected');
+        $("pg-" + number).classList.add('selected');
+    }
+
+    // Troca automática de notícias (páginas)
+    var counter = 0;
+    function change() {
+        counter++;
+        if (counter > pages){
+            location.reload(true);
+        }else{
+            showNews(counter);
+        }
+    }
+
+    if (pages > 0) {
+        $("pg-1").className = "first selected";
+        $("news-1").classList.add("visible");
+        setInterval(change, secondsPerPage * 1000);
+    }
+</script>
 </body>
 </html>

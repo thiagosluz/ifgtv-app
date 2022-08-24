@@ -7,6 +7,18 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+//    construtor
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // set permission
+        $this->middleware('permission:pages-list|pages-create|pages-edit|pages-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:pages-create', ['only' => ['create','store']]);
+        $this->middleware('permission:pages-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:pages-delete', ['only' => ['destroy']]);
+
+    }
+
     /**
      * Display a listing of the resource.
      *

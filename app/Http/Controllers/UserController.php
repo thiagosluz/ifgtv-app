@@ -9,6 +9,17 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+
+//    construtor com permissão de acesso
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:users-list|pages-create|pages-edit|pages-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:users-create')->only(['create', 'store']);
+        $this->middleware('permission:users-edit')->only(['edit', 'update']);
+        $this->middleware('permission:users-delete')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *

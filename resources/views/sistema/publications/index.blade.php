@@ -30,6 +30,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Título</th>
+                                <th>Tipo</th>
                                 <th>Criado por</th>
                                 <th>Expira em</th>
                                 <th>Status</th>
@@ -43,6 +44,7 @@
                                 <tr>
                                     <td>{{ $publication->id }}</td>
                                     <td>{{ $publication->titulo }}</td>
+                                    <td>{{ $publication->tipo }}</td>
                                     <td>{{ $publication->user->name }}</td>
                                     <td>{{ is_null($publication->data_expiracao) ? '-' : $publication->data_expiracao->format('d/m/Y') }}</td>
                                     <td>
@@ -69,22 +71,22 @@
                                         <a href="{{ route('publications.show', $publication->id) }}" class="btn btn-info btn-sm">
                                             <i class="fas fa-eye"></i> Detalhes
                                         </a>
-                                        <a href="{{ route('publications.edit', $publication->id) }}" class="btn btn-primary btn-sm">
-                                            <i class="fas fa-edit"></i> Editar
-                                        </a>
+{{--                                        <a href="{{ route('publications.edit', $publication->id) }}" class="btn btn-primary btn-sm">--}}
+{{--                                            <i class="fas fa-edit"></i> Editar--}}
+{{--                                        </a>--}}
 
-                                        <form class="form-deletar" action="{{ route('publications.destroy', $publication->id) }}" method="POST" style="display: inline;">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm btn-deletar">
-                                                <i class="fas fa-trash"></i> Excluir
-                                            </button>
-                                        </form>
+{{--                                        <form class="form-deletar" action="{{ route('publications.destroy', $publication->id) }}" method="POST" style="display: inline;">--}}
+{{--                                            @method('DELETE')--}}
+{{--                                            @csrf--}}
+{{--                                            <button type="submit" class="btn btn-danger btn-sm btn-deletar">--}}
+{{--                                                <i class="fas fa-trash"></i> Excluir--}}
+{{--                                            </button>--}}
+{{--                                        </form>--}}
                                     </td>
                                 </tr>
                             @empty
                                 <tr class="text-center">
-                                    <td colspan="7">Nenhum registro encontrado!</td>
+                                    <td colspan="8">Nenhum registro encontrado!</td>
                                 </tr>
                             @endforelse
 

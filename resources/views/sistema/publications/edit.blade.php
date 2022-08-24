@@ -26,7 +26,8 @@
                             {{-- Título --}}
                             <div class="form-group">
                                 <label for="name">Título</label>
-                                <input type="text" name="titulo" class="form-control @error('titulo') is-invalid @enderror" placeholder="Título da publicação" value="{{ $publication->titulo }}">
+                                <input id="titulo" type="text" name="titulo" class="form-control @error('titulo') is-invalid @enderror" placeholder="Título da publicação" value="{{ $publication->titulo }}">
+                                <p><small class="caracteres"></small></p>
                                 @error('titulo')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -61,6 +62,122 @@
                                     </div>
                                 @enderror
                             </div>
+
+
+
+                                <div class="form-group" id="div_cores">
+
+                                    <label for="name">Escolha um cor de fundo para a sua postagem</label>
+
+                                    <div class="row">
+
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                                <div class="icheck-wetasphalt">
+                                                    <input class="form-check-input" type="radio" name="cores" id="cores_preto" value="preto" {{ $publication->imagem == 'preto' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="cores_preto">
+                                                        Preto
+                                                    </label>
+                                                </div>
+                                                <div class="product-img">
+                                                    <a href="{{ asset('publish/tv/1.png')  }}" data-toggle="lightbox" data-title="Imagem de fundo preto">
+                                                        <img class="img-fluid img-thumbnail" src="{{ asset('publish/tv/1.png')  }}" alt="Product Image">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                                <div class="icheck-nephritis">
+                                                    <input class="form-check-input" type="radio" name="cores" id="cores_verde" value="verde" {{ $publication->imagem == 'verde' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="cores_verde">
+                                                        Verde
+                                                    </label>
+                                                </div>
+                                                <div class="product-img">
+                                                    <a href="{{ asset('publish/tv/2.png')  }}" data-toggle="lightbox" data-title="Imagem de fundo verde">
+                                                        <img class="img-fluid img-thumbnail" src="{{ asset('publish/tv/2.png')  }}" alt="Product Image">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                                <div class="icheck-turquoise">
+                                                    <input class="form-check-input" type="radio" name="cores" id="cores_turquesa" value="turquesa" {{ $publication->imagem == 'turquesa' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="cores_turquesa">
+                                                        Turquesa
+                                                    </label>
+                                                </div>
+                                                <div class="product-img">
+                                                    <a href="{{ asset('publish/tv/3.png')  }}" data-toggle="lightbox" data-title="Imagem de fundo turquesa">
+                                                        <img class="img-fluid img-thumbnail" src="{{ asset('publish/tv/3.png')  }}" alt="Product Image">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                                <div class="icheck-concrete">
+                                                    <input class="form-check-input" type="radio" name="cores" id="cores_cinza" value="cinza" {{ $publication->imagem == 'cinza' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="cores_cinza">
+                                                        Cinza
+                                                    </label>
+                                                </div>
+                                                <div class="product-img">
+                                                    <a href="{{ asset('publish/tv/4.png')  }}" data-toggle="lightbox" data-title="Imagem de fundo cinza">
+                                                        <img class="img-fluid img-thumbnail" src="{{ asset('publish/tv/4.png')  }}" alt="Product Image">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                                <div class="icheck-sunflower">
+                                                    <input class="form-check-input" type="radio" name="cores" id="cores_amarelo" value="amarelo" {{ $publication->imagem == 'amarelo' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="cores_amarelo">
+                                                        Amarelo
+                                                    </label>
+                                                </div>
+                                                <div class="product-img">
+                                                    <a href="{{ asset('publish/tv/5.png')  }}" data-toggle="lightbox" data-title="Imagem de fundo amarelo">
+                                                        <img class="img-fluid img-thumbnail" src="{{ asset('publish/tv/5.png')  }}" alt="Product Image">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                                <div class="icheck-wisteria">
+                                                    <input class="form-check-input" type="radio" name="cores" id="cores_roxo" value="roxo" {{ $publication->imagem == 'roxo' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="cores_roxo">
+                                                        Roxo
+                                                    </label>
+                                                </div>
+                                                <div class="product-img">
+                                                    <a href="{{ asset('publish/tv/6.png')  }}" data-toggle="lightbox" data-title="Imagem de fundo roxo">
+                                                        <img class="img-fluid img-thumbnail" src="{{ asset('publish/tv/6.png')  }}" alt="Product Image">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
                             @endif
 
                             @if($publication->tipo == 'imagem')
@@ -130,6 +247,8 @@
 @section('adminlte_css')
 {{--    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">--}}
 <link href="{{ asset('js/summernote/summernote.min.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
 
 @stop
 
@@ -138,9 +257,35 @@
 {{--    @include('layouts.erros_toast')--}}
 <script src="{{ asset('js/summernote/summernote.min.js') }}"></script>
 <script src="{{ asset('js/dist_lang_summernote-pt-BR.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox({
+                wrapping: false
+            });
+        });
+
+
+        //contador de caracteres no campo titulo
+        $(document).on("input", "#titulo", function() {
+            var limite = 70;
+            var informativo = "caracteres restantes.";
+            var caracteresDigitados = $(this).val().length;
+            var caracteresRestantes = limite - caracteresDigitados;
+
+            if (caracteresRestantes <= 0) {
+                var comentario = $("input[name=titulo]").val();
+                $("input[name=titulo]").val(comentario.substr(0, limite));
+                $(".caracteres").text("0 " + informativo);
+            } else {
+                $(".caracteres").text(caracteresRestantes + " " + informativo);
+            }
+        });
+
 
         //btn waiting
         $('#btn_submit').click(function() {

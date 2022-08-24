@@ -110,7 +110,7 @@
         </ol>
 
         <!-- Inner -->
-        <div class="carousel-inner">
+        <div class="carousel-inner" id="news-panel">
 
             @forelse($publications as $publication)
 
@@ -200,17 +200,18 @@
                 </div>
 
             @empty
-                <div class="carousel-item active" data-mdb-interval="{{ config('ifgtv.duracao_slides') }}">
-                    <video
-                        style="min-width: 100%; min-height: 100%"
-                        playsinline
-                        autoplay
-                        muted
-                        loop
-                    >
-                        <source class="h-100" src="{{ asset('publish/tv/video_modelo.mp4' ) }}" type="video/mp4" />
-                    </video>
-                </div>
+                <img src="{{ asset('publish/tv/teste.gif'  ) }}" class="d-block w-100 h-100" alt="Wild Landscape"/>
+{{--                <div class="carousel-item active" data-mdb-interval="{{ config('ifgtv.duracao_slides') }}">--}}
+{{--                    <video--}}
+{{--                        style="min-width: 100%; min-height: 100%"--}}
+{{--                        playsinline--}}
+{{--                        autoplay--}}
+{{--                        muted--}}
+{{--                        loop--}}
+{{--                    >--}}
+{{--                        <source class="h-100" src="{{ asset('publish/tv/video_modelo.mp4' ) }}" type="video/mp4" />--}}
+{{--                    </video>--}}
+{{--                </div>--}}
             @endforelse
 
 

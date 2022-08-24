@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Publication;
+
 class HomeController extends Controller
 {
     /**
@@ -22,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $publicados = Publication::publicado()->exibir()->count();
+        $aguardando = Publication::where('publicado', 0)->count();
+
+        return view('home',compact('publicados','aguardando'));
     }
 }

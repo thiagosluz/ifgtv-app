@@ -8,6 +8,16 @@ use Illuminate\Support\Facades\Log;
 
 class PermissionController extends Controller
 {
+    //construtor com permissão de acesso
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:permissions-list|permissions-create|permissions-edit|permissions-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:permissions-create')->only(['create', 'store']);
+        $this->middleware('permission:permissions-edit')->only(['edit', 'update']);
+        $this->middleware('permission:permissions-delete')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,12 +25,6 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        // create permissions
-//        Permission::create(['name' => 'edit articles']);
-//        Permission::create(['name' => 'delete articles']);
-//        Permission::create(['name' => 'publish articles']);
-//        Permission::create(['name' => 'unpublish articles']);
-//
         $permissions = Permission::paginate(10);
         return view('sistema.permissions.index', compact('permissions'));
     }

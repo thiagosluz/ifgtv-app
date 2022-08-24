@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             SuperAdminSeeder::class,
-            PageSeeder::class
+            PageSeeder::class,
         ]);
     }
 }

@@ -61,70 +61,77 @@
             width: 1200px;
             height: 590px;
             display: none;
+
         }
 
         #news-panel .visible {
             display: block;
         }
 
-        .textual-news {
-            padding: 20px;
-            width: 1160px !important;
-            height: 550px !important;
-            background-color: #DFDFDF;
-        }
+        {{--.textual-news {--}}
+        {{--    background:url("{{ asset('publish/tv/5.png')  }}");--}}
+        {{--    width: 100%;--}}
+        {{--    height: 100%;--}}
 
-        .textual-news .date {
-            font-size: 20pt;
-            color: #4D4D4D;
-            font-weight: bold;
-        }
+        {{--}--}}
 
         .textual-news .title {
             font-size: 33pt;
             color: #4D4D4D;
             font-weight: bold;
-            margin-bottom: 23px;
+            margin-bottom: 40px;
+            padding-top: 84px;
         }
 
         .textual-news .container {
             overflow: hidden;
         }
 
-        .textual-news p {
-            font-size: 20pt;
-            color: #4D4D4D;
-            text-indent: 133px;
-        }
-
-        .textual-news .image {
-            width: 426px;
-            height: 284px;
-        }
 
         .textual-news .text {
-            float: right;
-            width: 686px;
+            margin-left: 40px;
+            margin-right: 40px;
         }
 
-        .textual-news .footer {
-            margin-top: 20px;
-            font-size: 17pt;
-            color: #4D4D4D;
-            font-weight: bold;
-            text-align: right;
-        }
     </style>
 </head>
 <body>
 <div id="main">
     <div id="news-panel">
-        <img class="image-news" src="{{ asset('publish/tv/publi_tv_1653667732.png') }}" />
-        <img class="image-news" src="{{ asset('publish/tv/publi_tv_1653667732.png') }}" />
-        <div class="textual-news">
-            <p>teste</p>
-            <div class="text">footer</div>
-        </div>
+
+        @forelse($publications as $publication)
+            @if($publication->tipo === 'imagem')
+                <img class="image-news" src="{{ asset('publish/tv/' . $publication->imagem)  }} " />
+            @elseif($publication->tipo === 'texto')
+
+                @if($publication->imagem == 'preto')
+                    <div class="textual-news" style="background-image: url('{{ asset('publish/tv/1.png')  }}'); width: 100%; height: 100%">
+                @elseif($publication->imagem == 'verde')
+                    <div class="textual-news" style="background-image: url('{{ asset('publish/tv/2.png')  }}'); width: 100%; height: 100%">
+                @elseif($publication->imagem == 'turquesa')
+                    <div class="textual-news" style="background-image: url('{{ asset('publish/tv/3.png')  }}'); width: 100%; height: 100%">
+                @elseif($publication->imagem == 'cinza')
+                    <div class="textual-news" style="background-image: url('{{ asset('publish/tv/4.png')  }}'); width: 100%; height: 100%">
+                @elseif($publication->imagem == 'amarelo')
+                    <div class="textual-news" style="background-image: url('{{ asset('publish/tv/5.png')  }}'); width: 100%; height: 100%">
+                @elseif($publication->imagem == 'roxo')
+                    <div class="textual-news" style="background-image: url('{{ asset('publish/tv/6.png')  }}'); width: 100%; height: 100%">
+                @else
+                    <div class="textual-news" style="background-image: url('{{ asset('publish/tv/2.png')  }}'); width: 100%; height: 100%">
+                @endif
+
+                        <div class="container">
+                            <div class="text">
+                                <div class="title">{{ $publication->titulo }}</div>
+                                <div class="text">{!! $publication->texto !!}</div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                @empty
+
+                @endforelse
 
     </div>
     <ul id="pagination"><!-- pagination goes here --></ul>
@@ -132,8 +139,9 @@
 <script>
 
     // Configurações
-    var secondsPerPage = 30;
+    var secondsPerPage = 10; // tempo em segundos para cada página
     var pages = $("news-panel").children.length;
+
 
     // Função básica de seleção de elementos por ID
     function $ (elementId) {
@@ -143,6 +151,7 @@
     // Inicialização dos elementos tratados como notícias/páginas
     for (var i = 0; i < pages; i++)
         $("news-panel").children[i].id = "news-" + (i + 1)
+
 
     // Paginação
     for (var i = 1; i <= pages; i++)
@@ -160,13 +169,16 @@
     }
 
     // Troca automática de notícias (páginas)
-    var counter = 1;
+    var counter = 0;
     function change() {
         counter++;
-        if (counter > pages)
+        if (counter > pages){
             location.reload(true);
-        showNews(counter);
+        }else{
+            showNews(counter);
+        }
     }
+
     if (pages > 0) {
         $("pg-1").className = "first selected";
         $("news-1").classList.add("visible");

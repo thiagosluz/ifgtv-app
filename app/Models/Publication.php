@@ -30,4 +30,10 @@ class Publication extends Model
         ->orWhereNull('data_expiracao');
     }
 
+//    //publications by user
+//    public function scopeByUser($query, $user_id)
+//    {
+//        $query->where('user_id', $user_id);
+//    }
+
 }

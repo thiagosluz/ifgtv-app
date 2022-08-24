@@ -12,7 +12,7 @@ class IndexController extends Controller
     public function index()
     {
         $publications = Publication::publicado()->exibir()->get();
-        return view('index2', compact('publications'));
+        return view('index4', compact('publications'));
     }
 
     public function carousel()

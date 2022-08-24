@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index']);
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -30,5 +30,6 @@ Route::prefix('admin')->group(function () {
 Route::resource('publications', App\Http\Controllers\PublicationController::class);
 Route::get('publications/previa/{publications}', [App\Http\Controllers\PublicationController::class, 'previa'])->name('publications.previa');
 Route::post('publications/publicar/{publications}', [App\Http\Controllers\PublicationController::class, 'post'])->name('publications.publicar');
+Route::get('teste', [App\Http\Controllers\PublicationController::class, 'imagemText'])->name('publications.teste');
 
 

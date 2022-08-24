@@ -29,37 +29,50 @@
                             </a>
                         </div>
 
+{{--                    permission:publications-publicar--}}
+                        @can('publications-publicar')
                         <div class="btn-group">
-
                             <form action="{{ route('publications.publicar', $publication->id) }}" method="POST">
                                 @csrf
-
+                                @if($publication->publicado == 0)
                                 <button id="btn_submit"  type="submit" class="btn btn-outline-success btn-flat" data-toggle="tooltip" title="Aprovando, será exibido em todas as TVs"><i class="fas fa-check"></i> Aprovar publicação</button>
+                                @else
+                                <button class="btn btn-outline-success btn-flat" data-toggle="tooltip" title="Aprovando, será exibido em todas as TVs" disabled><i class="fas fa-check"></i> Publicação já aprovada</button>
+                                @endif
 
                                 <button type="button" class="btn btn-outline-success btn-flat" id="btn_waiting" style="display: none" disabled="disabled">
                                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     Salvando...
                                 </button>
                             </form>
-
                         </div>
+                        @endcan
 
 
+{{--                    permission:publications-edit--}}
+                        @can('publications-edit')
+                            @if($publication->publicado == 0)
+                                <div class="btn-group">
+                                    <a href="{{ route('publications.edit', $publication->id) }}" class="btn btn-outline-warning btn-flat">
+                                        <i class="fas fa-edit"></i>
+                                        Editar
+                                    </a>
+                                </div>
+                            @endif
+                        @endcan
 
-                        <div class="btn-group">
-                            <a href="{{ route('publications.edit', $publication->id) }}" class="btn btn-outline-warning btn-flat">
-                                <i class="fas fa-edit"></i>
-                                Editar
-                            </a>
-                        </div>
-
+{{--                    permission:publications-previa--}}
+                        @can('publications-previa')
                         <div class="btn-group">
                             <a href="{{ route('publications.previa', $publication->id) }}" class="btn btn-primary btn-flat" data-toggle="tooltip" title="Prévia de como ficará a postagem nas TVs">
                                 <i class="fas fa-eye"></i>
                                 Visualizar
                             </a>
                         </div>
+                        @endcan
 
+{{--                    permission:publications-delete ou permission:publications-moderador --}}
+                        @can('publications-delete')
                         <div class="btn-group float-right">
                             <form class="form-deletar" action="{{ route('publications.destroy', $publication->id) }}" method="POST">
                                 @csrf
@@ -70,6 +83,7 @@
                                 </button>
                             </form>
                         </div>
+                        @endcan
 
                     {{--fim de controles de ações--}}
 
@@ -83,32 +97,56 @@
 
         <div class="row">
 
-
             <div class="col-md-6">
-                <div class="card card-default">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="fas fa-bullhorn"></i>
-                            #{{ $publication->id }}
-                        </h3>
-                    </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="fas fa-bullhorn"></i>
+                                    #{{ $publication->id }}
+                                </h3>
+                            </div>
 
-                    <div class="card-body">
+                            <div class="card-body">
 
-                        <div class="callout callout-success">
-                            <h5>Título</h5>
-                            <p>{{ $publication->titulo }}</p>
+                                <div class="callout callout-success">
+                                    <h5>Título</h5>
+                                    <p>{{ $publication->titulo }}</p>
+                                </div>
+
+                                <div class="callout callout-info">
+                                    <h5>Texto</h5>
+                                    <p>{!! $publication->texto !!}</p>
+                                </div>
+
+                            </div>
+
                         </div>
 
-                        <div class="callout callout-info">
-                            <h5>Texto</h5>
-                            <p>{!! $publication->texto !!}</p>
-                        </div>
-
                     </div>
+
+                    @if($publication->tipo === 'imagem')
+                        <div class="col-md-12">
+                            <div class="card card-widget">
+                                <div class="card-header">
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <img class="img-fluid pad" src="{{ asset('publish/tv/' . $publication->imagem)  }} " alt="Photo">
+                                </div>
+
+                            </div>
+
+                        </div>
+                    @endif
 
                 </div>
-
             </div>
 
             <div class="col-md-6">

@@ -12,6 +12,8 @@ seed:
 	docker-compose exec app php artisan db:seed
 migrate:
 	docker-compose exec app php artisan migrate:fresh --seed
+start-log:
+	docker-compose up
 #run:
 #	docker-compose run --rm
 

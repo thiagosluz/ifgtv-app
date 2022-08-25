@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kyslik\ColumnSortable\Sortable;
 
 class Publication extends Model
 {
-    use HasFactory, softDeletes;
+    use HasFactory, softDeletes, Sortable;
 
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'data_expiracao'];
+
+    public $sortable = ['id', 'titulo', 'tipo', 'user_id', 'data_expiracao', 'status', 'publicado'];
 
     public function user()
     {

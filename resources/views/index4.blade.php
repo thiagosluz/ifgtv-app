@@ -89,6 +89,7 @@
 
 
         .textual-news .text {
+            font-size: 20pt;
             margin-left: 40px;
             margin-right: 40px;
         }
@@ -139,7 +140,7 @@
 <script>
 
     // Configurações
-    var secondsPerPage = 10; // tempo em segundos para cada página
+    var secondsPerPage = 30; // tempo em segundos para cada página
     var pages = $("news-panel").children.length;
 
 

@@ -68,12 +68,12 @@
             display: block;
         }
 
-        .textual-news {
-            background:url("{{ asset('publish/tv/modelo5.png')  }}");
-            width: 100%;
-            height: 100%;
+        {{--.textual-news {--}}
+        {{--    background:url("{{ asset('publish/tv/modelo5.png')  }}");--}}
+        {{--    width: 100%;--}}
+        {{--    height: 100%;--}}
 
-        }
+        {{--}--}}
 
         .textual-news .title {
             font-size: 33pt;
@@ -89,6 +89,7 @@
 
 
         .textual-news .text {
+            font-size: 20pt;
             margin-left: 40px;
             margin-right: 40px;
         }
@@ -108,8 +109,25 @@
             @if($publication->tipo === 'imagem')
                 <img class="image-news" src="{{ asset('publish/tv/' . $publication->imagem)  }} " />
             @elseif($publication->tipo === 'texto')
-                <div class="textual-news">
-                    <div class="container">
+
+            @if($publication->imagem == 'preto')
+                <div class="textual-news" style="background-image: url('{{ asset('publish/tv/1.png')  }}'); width: 100%; height: 100%">
+                    @elseif($publication->imagem == 'verde')
+                        <div class="textual-news" style="background-image: url('{{ asset('publish/tv/2.png')  }}'); width: 100%; height: 100%">
+                            @elseif($publication->imagem == 'turquesa')
+                                <div class="textual-news" style="background-image: url('{{ asset('publish/tv/3.png')  }}'); width: 100%; height: 100%">
+                                    @elseif($publication->imagem == 'cinza')
+                                        <div class="textual-news" style="background-image: url('{{ asset('publish/tv/4.png')  }}'); width: 100%; height: 100%">
+                                            @elseif($publication->imagem == 'amarelo')
+                                                <div class="textual-news" style="background-image: url('{{ asset('publish/tv/5.png')  }}'); width: 100%; height: 100%">
+                                                    @elseif($publication->imagem == 'roxo')
+                                                        <div class="textual-news" style="background-image: url('{{ asset('publish/tv/6.png')  }}'); width: 100%; height: 100%">
+                                                            @else
+                                                                <div class="textual-news" style="background-image: url('{{ asset('publish/tv/2.png')  }}'); width: 100%; height: 100%">
+                                                                    @endif
+
+
+                                                                    <div class="container">
                         <div class="text">
                             <div class="title">{{ $publication->titulo }}</div>
                             <div class="text">{!! $publication->texto !!}</div>

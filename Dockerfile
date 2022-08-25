@@ -31,7 +31,8 @@ RUN apt-get update  \
     libwebp-dev \
     libxpm-dev \
     libmcrypt-dev \
-    libonig-dev
+    libonig-dev \
+    jpegoptim optipng pngquant gifsicle webp
 
 # configure, install and enable all php packages
 RUN  docker-php-ext-configure gd --prefix=/usr --with-jpeg --with-webp --with-xpm --with-freetype

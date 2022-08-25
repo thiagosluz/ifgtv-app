@@ -28,13 +28,13 @@
                         <table id="example1" class="table table-striped table-hover">
                             <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Título</th>
-                                <th>Tipo</th>
-                                <th>Criado por</th>
-                                <th>Expira em</th>
-                                <th>Status</th>
-                                <th>Publicado?</th>
+                                <th>@sortablelink('id','ID')</th>
+                                <th>@sortablelink('titulo','Título')</th>
+                                <th>@sortablelink('Tipo','Tipo')</th>
+                                <th>@sortablelink('user.name','Criado por')</th>
+                                <th>@sortablelink('data_expiracao','Expira em')</th>
+                                <th>@sortablelink('status','Status')</th>
+                                <th>@sortablelink('publicado','Publicado?')</th>
                                 <th>Ações</th>
                             </tr>
                             </thead>
@@ -96,7 +96,8 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer clearfix">
-                        {!! $publications->withQueryString()->links('pagination::bootstrap-5') !!}
+{{--                        {!! $publications->withQueryString()->links('pagination::bootstrap-5') !!}--}}
+                        {!! $publications->appends(Request::except('page'))->links('pagination::bootstrap-5')  !!}
                     </div>
 
 

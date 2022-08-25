@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ImagemOtimizarJob;
 use App\Jobs\SendEmailJob;
 use App\Mail\PostsStatus;
 use App\Models\Publication;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use League\ColorExtractor\Palette;
 use Spatie\Color\Rgb;
+use ImageOptimizer;
 
 class PublicationController extends Controller
 {
@@ -40,7 +42,8 @@ class PublicationController extends Controller
      */
     public function index()
     {
-        $publications = Publication::with('user')->orderBy('created_at', 'desc')->paginate(10);
+//        $publications = Publication::with('user')->orderBy('created_at', 'desc')->paginate(10);
+        $publications = Publication::sortable(['id' => 'desc'])->with('user')->paginate(10);
         return view('sistema.publications.index', compact('publications'));
     }
 
@@ -108,6 +111,9 @@ class PublicationController extends Controller
                     });
                     $canvas->insert($image, 'center');
                     $canvas->save(public_path('publish/tv/'. $fileName .'.png'));
+//                  chamar job para otimizar imagem
+                    dispatch(new ImagemOtimizarJob($fileName));
+
                 }
             }elseif ($request->tipo == 'video') {
                 $file = $request->video;
@@ -241,7 +247,11 @@ class PublicationController extends Controller
                         });
                         $canvas->insert($image, 'center');
                         $canvas->save(public_path('publish/tv/'. $fileName .'.png'));
+                        //                  chamar job para otimizar imagem
+                        dispatch(new ImagemOtimizarJob($fileName));
+
                     }
+
                 }elseif ($publication->tipo == 'video') {
                     $file = $request->video;
                     $fileName = "publi_tv_".time();

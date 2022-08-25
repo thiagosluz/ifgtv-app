@@ -1,13 +1,9 @@
-composer install --optimize-autoloader --no-dev
+##dar permissão de escrita para o diretório storage
+sudo chmod -R 777 storage
+sudo chmod -R 777 bootstrap/cache
+sudo chmod -R 777 public/publish/thumbnail
+sudo chmod -R 777 public/publish/tv
 
-# limpar cache
-php artisan cache:clear
-php artisan config:clear
-php artisan view:clear
-php artisan route:clear
-
-# cache config
-php artisan config:cache
-php artisan view:cache
-php artisan route:cache
+##instalar dependências
+composer install
 

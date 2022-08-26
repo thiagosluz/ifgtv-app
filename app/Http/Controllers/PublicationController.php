@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\ImagemOtimizarJob;
+use App\Jobs\LogsPublicationJob;
 use App\Jobs\SendEmailJob;
 use App\Mail\PostsStatus;
 use App\Models\Publication;
@@ -147,6 +148,9 @@ class PublicationController extends Controller
                 dispatch(new SendEmailJob($publication, 'Nova Publicação', $user->email));
             }
 
+//            logs de criação de publicação
+            dispatch(new LogsPublicationJob( $publication->id, auth()->user()->id, 'criou a publicação.' ));
+
             return redirect()->route('publications.index')->with('success', 'Publicação criada com sucesso!');
 
         } catch (\Exception $e) {
@@ -184,8 +188,12 @@ class PublicationController extends Controller
      */
     public function edit(Publication $publication)
     {
+        if ($publication->publicado == 1){
+            return redirect()->route('publications.index')->with('error', 'Não é possível editar uma publicação já publicada.');
+        }
+
         $user = auth()->user();
-        if ( ($user->id == $publication->user_id) || (auth()->user()->can('publications-moderador')) ) {
+        if ( ($user->id == $publication->user_id) || (auth()->user()->can('publications-moderador'))  ) {
             return view('sistema.publications.edit', compact('publication'));
         }else{
             return redirect()->route('publications.index')->with('error', 'Você não tem permissão para editar esta publicação');
@@ -276,6 +284,8 @@ class PublicationController extends Controller
 
                 $publication->update();
 
+                dispatch(new LogsPublicationJob( $publication->id, auth()->user()->id, 'atualizou a publicação.' ));
+
                 return redirect()->route('publications.index')->with('success', 'Publicação atualizada com sucesso!');
 
 
@@ -309,7 +319,8 @@ class PublicationController extends Controller
 
             try {
                 $publication->delete();
-                return redirect()->route('publications.index')->with('success', 'Publicação excluída com sucesso!');
+                dispatch(new LogsPublicationJob( $publication->id, auth()->user()->id, 'Publicação foi apagada.' ));
+                return redirect()->route('publications.index')->with('success', 'deletou a publicação.');
             } catch (\Exception $e) {
                 Log::error('Não foi possível excluir a publicação: ' . $e->getMessage());
                 return redirect()->route('publications.index')->with('error', 'Não foi possível excluir a publicação!');
@@ -336,6 +347,7 @@ class PublicationController extends Controller
             $publication->publicado = true;
             $publication->status = 3;
             $publication->update();
+            dispatch(new LogsPublicationJob( $publication->id, auth()->user()->id, 'aprovou a publicação.' ));
             return redirect()->route('publications.index')->with('success', 'Publicação aparecendo nas TVs!');
         }catch (\Exception $e) {
             Log::error('Não foi possível publicar a publicação: ' . $e->getMessage());

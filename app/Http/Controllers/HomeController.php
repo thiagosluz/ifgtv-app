@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Publication;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,8 @@ class HomeController extends Controller
     {
         $publicados = Publication::publicado()->exibir()->count();
         $aguardando = Publication::where('publicado', 0)->count();
+        $users_without_any_roles = User::doesntHave('roles')->count();
 
-        return view('home',compact('publicados','aguardando'));
+        return view('home',compact('publicados','aguardando', 'users_without_any_roles'));
     }
 }

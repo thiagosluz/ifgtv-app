@@ -8,7 +8,7 @@ return [
     'retype_password'             => 'Repita a senha',
     'remember_me'                 => 'Lembrar-me',
     'register'                    => 'Registrar',
-    'register_a_new_membership'   => 'Registrar um novo membro',
+    'register_a_new_membership'   => 'Criar uma nova conta',
     'i_forgot_my_password'        => 'Esqueci minha senha',
     'i_already_have_a_membership' => 'Já sou um membro',
     'sign_in'                     => 'Entrar',

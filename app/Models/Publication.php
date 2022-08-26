@@ -33,6 +33,12 @@ class Publication extends Model
         ->orWhereNull('data_expiracao');
     }
 
+//    relações com History
+    public function history()
+    {
+        return $this->hasMany('App\Models\History')->orderBy('created_at', 'desc');
+    }
+
 //    //publications by user
 //    public function scopeByUser($query, $user_id)
 //    {

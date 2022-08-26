@@ -1,9 +1,8 @@
-##dar permissão de escrita para o diretório storage
 sudo chmod -R 777 storage
 sudo chmod -R 777 bootstrap/cache
 sudo chmod -R 777 public/publish/thumbnail
 sudo chmod -R 777 public/publish/tv
 
-##instalar dependências
+#instalar dependências
 composer install
 

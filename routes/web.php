@@ -15,12 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index']);
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin')->group(function () {
     Route::resource('users', App\Http\Controllers\UserController::class);
+    Route::get('profile', [App\Http\Controllers\UserController::class, 'editProfile'])->name('profile');
+    Route::put('profile', [App\Http\Controllers\UserController::class, 'updateProfile'])->name('profile.update');
     Route::resource('roles', App\Http\Controllers\RoleController::class);
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
     Route::resource('pages', App\Http\Controllers\PageController::class);

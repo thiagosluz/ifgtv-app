@@ -106,11 +106,40 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, User $user)
     {
-        //
+        //função para atualizar user com request validate
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'password' => 'nullable|string|min:6|confirmed',
+            'role' => 'required',
+        ], [
+            'name.required' => 'o campo nome é obrigatório',
+            'email.required' => 'o campo email é obrigatório',
+            'password.required' => 'o campo senha é obrigatório',
+            'password.confirmed' => 'as senhas não conferem',
+            'role.required' => 'o campo role é obrigatório',
+        ]);
+
+        try {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $request->password ? bcrypt($request->password) : $user->password,
+            ]);
+            $user->roles()->sync($request->role);
+            return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso!');
+        }catch (\Exception $e) {
+            Log::error('Erro ao atualizar usuário: ' . $e->getMessage());
+            return redirect()->route('users.index')->with('error', 'Erro ao atualizar usuário!');
+        }
+
+
+
+
     }
 
     /**
@@ -129,4 +158,39 @@ class UserController extends Controller
            return redirect()->route('users.index')->with('error', 'Erro ao excluir usuário!');
        }
     }
+
+
+//    função de editar perfil
+    public function editProfile()
+    {
+        $user = auth()->user();
+        return view('sistema.users.editProfile', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            'password' => 'nullable|string|min:6|confirmed',
+        ], [
+            'name.required' => 'o campo nome é obrigatório',
+            'email.required' => 'o campo email é obrigatório',
+            'password.confirmed' => 'as senhas não conferem',
+        ]);
+
+        try {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $request->password ? bcrypt($request->password) : $user->password,
+            ]);
+            return redirect()->route('home')->with('success', 'Perfil atualizado com sucesso!');
+        }catch (\Exception $e) {
+            Log::error('Erro ao atualizar perfil: ' . $e->getMessage());
+            return redirect()->route('home')->with('error', 'Erro ao atualizar perfil!');
+        }
+    }
+
 }

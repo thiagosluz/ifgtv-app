@@ -212,6 +212,69 @@
         </div>
     </div>
 
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+
+
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-bullhorn"></i>
+                           Histórico de modificações
+                        </h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="timeline">
+
+
+                            @foreach($publication->history as $log)
+
+                                <div class="time-label">
+                                    @php
+                                        \Carbon\Carbon::setlocale('pt_BR');
+                                    @endphp
+                                    <span class="bg-blue">{{ $log->created_at->translatedFormat('l\, j \de F \de Y') }}</span>
+                                </div>
+
+
+                                <div>
+                                    <i class="fas fa-bullhorn bg-blue"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fas fa-clock"></i> {{ $log->created_at->diffForHumans() }}</span>
+                                        <h3 class="timeline-header"><a href="#">{{ $log->user->name }}</a> {{ $log->action }}</h3>
+                                    </div>
+                                </div>
+
+                            @endforeach
+
+
+
+                            {{--                    <div>--}}
+                            {{--                        <i class="fas fa-user bg-green"></i>--}}
+                            {{--                        <div class="timeline-item">--}}
+                            {{--                            <span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>--}}
+                            {{--                            <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>--}}
+                            {{--                        </div>--}}
+                            {{--                    </div>--}}
+
+                            <div>
+                                <i class="fas fa-clock bg-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
 @stop
 
 @section('footer')

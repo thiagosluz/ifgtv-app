@@ -34,4 +34,6 @@ Route::get('publications/previa/{publications}', [App\Http\Controllers\Publicati
 Route::post('publications/publicar/{publications}', [App\Http\Controllers\PublicationController::class, 'post'])->name('publications.publicar');
 Route::get('teste', [App\Http\Controllers\PublicationController::class, 'imagemText'])->name('publications.teste');
 
+Route::resource('birthdays', App\Http\Controllers\BirthdayController::class);
+
 

@@ -32,14 +32,14 @@ RUN apt-get update  \
     libxpm-dev \
     libmcrypt-dev \
     libonig-dev \
+    default-mysql-client \
     jpegoptim optipng pngquant gifsicle webp
 
 # configure, install and enable all php packages
 RUN  docker-php-ext-configure gd --prefix=/usr --with-jpeg --with-webp --with-xpm --with-freetype
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd intl xml soap session mysqli
-
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd intl xml soap session mysqli zip
 
 # Install Node.js
 RUN curl -sLS https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \

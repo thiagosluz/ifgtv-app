@@ -45,6 +45,7 @@ class PublicationController extends Controller
     {
 //        $publications = Publication::with('user')->orderBy('created_at', 'desc')->paginate(10);
         $publications = Publication::sortable(['id' => 'desc'])->with('user')->paginate(10);
+//        Log::info('teste');
         return view('sistema.publications.index', compact('publications'));
     }
 
@@ -116,14 +117,14 @@ class PublicationController extends Controller
                     dispatch(new ImagemOtimizarJob($fileName));
 
                 }
-            }elseif ($request->tipo == 'video') {
+            }
+
+            elseif ($request->tipo == 'video') {
                 $file = $request->video;
                 $fileName = "publi_tv_".time();
                 $file->move(public_path('publish/tv/'), $fileName .'.mp4');
 
             }
-
-
 
             $publication = new Publication();
             $publication->titulo = $request->titulo;

@@ -71,6 +71,13 @@ class SuperAdminSeeder extends Seeder
         $publications_teste = Permission::create(['name' => 'publications-teste']);
         $publications_moderador = Permission::create(['name' => 'publications-moderador']);
 
+        //birthdays
+        $birthdays_list = Permission::create(['name' => 'birthdays-list']);
+        $birthdays_create = Permission::create(['name' => 'birthdays-create']);
+        $birthdays_edit = Permission::create(['name' => 'birthdays-edit']);
+        $birthdays_delete = Permission::create(['name' => 'birthdays-delete']);
+
+
 
         // create roles and assign created permissions
         //admin
@@ -89,6 +96,10 @@ class SuperAdminSeeder extends Seeder
                 $publications_publicar,
                 $publications_teste,
                 $publications_moderador,
+                $birthdays_list,
+                $birthdays_create,
+                $birthdays_edit,
+                $birthdays_delete,
               ]);
 
         $user2 = User::factory()->create([
@@ -111,6 +122,10 @@ class SuperAdminSeeder extends Seeder
                 $publications_publicar,
                 $publications_teste,
                 $publications_moderador,
+                $birthdays_list,
+                $birthdays_create,
+                $birthdays_edit,
+                $birthdays_delete,
             ]);
 
         $user3 = User::factory()->create([

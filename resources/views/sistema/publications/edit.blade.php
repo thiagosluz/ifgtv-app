@@ -295,6 +295,7 @@
 
         $('.summernote').summernote({
             lang: 'pt-BR',
+            height: 250,
             disableDragAndDrop: true,
             toolbar: [
                 // [groupName, [list of button]]

@@ -76,7 +76,7 @@
         {{--}--}}
 
         .textual-news .title {
-            font-size: 33pt;
+            font-size: 40pt;
             color: #4D4D4D;
             font-weight: bold;
             margin-bottom: 40px;
@@ -87,12 +87,20 @@
             overflow: hidden;
         }
 
-
+        @if($publication->imagem == 'aniversario')
+        .textual-news .text {
+            font-size: 30pt;
+            margin-left: 40px;
+            margin-right: 40px;
+        }
+        @else
         .textual-news .text {
             font-size: 20pt;
             margin-left: 40px;
             margin-right: 40px;
         }
+        @endif
+
 
     </style>
 </head>
@@ -122,6 +130,8 @@
                                                 <div class="textual-news" style="background-image: url('{{ asset('publish/tv/5.png')  }}'); width: 100%; height: 100%">
                                                     @elseif($publication->imagem == 'roxo')
                                                         <div class="textual-news" style="background-image: url('{{ asset('publish/tv/6.png')  }}'); width: 100%; height: 100%">
+                                                            @elseif($publication->imagem == 'aniversario')
+                                                                <div class="textual-news" style="background-image: url('{{ asset('publish/tv/7.png')  }}'); width: 100%; height: 100%">
                                                             @else
                                                                 <div class="textual-news" style="background-image: url('{{ asset('publish/tv/2.png')  }}'); width: 100%; height: 100%">
                                                                     @endif
@@ -129,7 +139,18 @@
 
                                                                     <div class="container">
                         <div class="text">
-                            <div class="title">{{ $publication->titulo }}</div>
+
+                            @if($publication->imagem == 'aniversario')
+                                <div class="title">
+                                    <p style="text-align: center;">
+                                        {!! $publication->titulo !!}
+                                    </p>
+                                </div>
+                            @else
+                                <div class="title">{!! $publication->titulo !!}</div>
+                            @endif
+
+
                             <div class="text">{!! $publication->texto !!}</div>
                         </div>
                     </div>

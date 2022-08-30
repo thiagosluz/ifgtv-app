@@ -77,5 +77,14 @@ class PageSeeder extends Seeder
             'can' => 'publications-list',
         ]);
 
+        //criar pagina de aniversáriantes do mês
+        $pagBirthday = Page::create([
+            'text' => 'Aniversariantes',
+            'url' => 'birthdays',
+            'icon' => 'fas fa-fw fa-birthday-cake',
+            'order' => 8,
+            'can' => 'birthday-list',
+        ]);
+
     }
 }

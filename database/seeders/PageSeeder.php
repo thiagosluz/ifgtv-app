@@ -86,5 +86,23 @@ class PageSeeder extends Seeder
             'can' => 'birthday-list',
         ]);
 
+        //criar pagina de configurações
+        $pagConfig = Page::create([
+            'text' => 'Configurações',
+            'url' => 'config',
+            'icon' => 'fas fa-fw fa-cog',
+            'order' => 9,
+            'can' => 'config-list',
+        ]);
+
+        //criar pagina de backup
+        $pagBackup = Page::create([
+            'text' => 'Backup',
+            'url' => 'backup',
+            'icon' => 'fas fa-fw fa-database',
+            'order' => 10,
+            'can' => 'backup-list',
+        ]);
+
     }
 }

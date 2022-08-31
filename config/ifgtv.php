@@ -10,14 +10,13 @@ return [
     |
     */
 
-
     'imagem' => [
         'altura' => 590,
         'largura' => 1200,
     ],
-    
 
-    'duracao_slides' => 10000,
+//    a duração do slide vem do banco de dados
+//    'duracao_slides' => 10000,
 
 
 

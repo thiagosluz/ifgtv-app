@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
 use App\Models\Publication;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -12,7 +13,8 @@ class IndexController extends Controller
     public function index()
     {
         $publications = Publication::publicado()->exibir()->get();
-        return view('index4', compact('publications'));
+        $config = Config::first();
+        return view('index4', compact('publications', 'config'));
     }
 
     public function carousel()

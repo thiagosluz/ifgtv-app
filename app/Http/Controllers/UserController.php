@@ -27,7 +27,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
+//        $publications = Publication::sortable(['id' => 'desc'])->with('user')->paginate(10);
+        $users = User::sortable(['id' => 'desc'])->with('roles')->paginate(10);
         return view('sistema.users.index', compact('users'));
     }
 
@@ -69,7 +70,12 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
             ]);
-            $user->roles()->attach($request->role);
+            //não permitir que a role Super-Admin seja atribuida a outro usuário
+            if(in_array(1, $request->role)){
+                return redirect()->route('users.index')->with('error', 'Não é permitido atribuir Super-Admin ao usuário!');
+            }else{
+                $user->roles()->sync($request->role);
+            }
             return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso!');
         }catch (\Exception $e) {
             Log::error('Erro ao criar usuário: ' . $e->getMessage());
@@ -110,6 +116,11 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+
+        //se o usuario for Super-Admin não pode ser editado
+        if ($user->hasRole('Super-Admin')) {
+            return redirect()->route('users.index')->with('error', 'Usuário Super-Admin não pode ser editado!');
+        }
         //função para atualizar user com request validate
         $this->validate($request, [
             'name' => 'required|string|max:255',
@@ -130,15 +141,19 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => $request->password ? bcrypt($request->password) : $user->password,
             ]);
-            $user->roles()->sync($request->role);
+            //não permitir que a role Super-Admin seja atribuida a outro usuário
+
+            if(in_array(1, $request->role)){
+                return redirect()->route('users.index')->with('error', 'Não é permitido atribuir Super-Admin ao usuário!');
+            }else{
+                $user->roles()->sync($request->role);
+            }
+
             return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso!');
         }catch (\Exception $e) {
             Log::error('Erro ao atualizar usuário: ' . $e->getMessage());
             return redirect()->route('users.index')->with('error', 'Erro ao atualizar usuário!');
         }
-
-
-
 
     }
 
@@ -150,6 +165,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        //se o usuario for Super-Admin não pode ser deletado
+        if ($user->hasRole('Super-Admin')) {
+            return redirect()->route('users.index')->with('error', 'Usuário Super-Admin não pode ser deletado!');
+        }
        try{
            $user->delete();
            return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso!');

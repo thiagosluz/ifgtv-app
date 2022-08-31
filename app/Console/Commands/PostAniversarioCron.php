@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Birthday;
+use App\Models\Config;
 use App\Models\Publication;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -39,10 +40,11 @@ class PostAniversarioCron extends Command
             //nova publicação de aniversário
 
             Carbon::setlocale('pt_BR');
+            $config = Config::first();
 
             $publication = new Publication();
             $publication->titulo = 'Feliz Aniversário<br>' . $birthday->birthday->translatedFormat('l\, j \de F');
-            $publication->texto = '<p style="text-align: center; "><b><i>' . $birthday->name . '</i></b>, o IFG Câmpus Jataí deseja que você tenha um feliz aniversário.</p>';
+            $publication->texto = '<p style="text-align: center; "><b><i>' . $birthday->name . '</i></b>, ' . $config->birthday_message . '</p>';
             $publication->tipo = 'texto';
             $publication->imagem = 'aniversario';
             $publication->status = 3;

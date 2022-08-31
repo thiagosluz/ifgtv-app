@@ -71,12 +71,15 @@
                                 @enderror
 
                                 @foreach($roles as $role)
-                                    <div class="form-check icheck-primary">
-                                        <input class="form-check-input" type="checkbox" name="role[]" value="{{ $role->id }}" id="role_{{ $role->id }}">
-                                        <label class="form-check-label" for="role_{{ $role->id }}">
-                                            {{ $role->name }}
-                                        </label>
-                                    </div>
+{{--                                não aparecer regra super-admin--}}
+                                    @if($role->name != 'Super-Admin')
+                                        <div class="form-check icheck-primary">
+                                            <input class="form-check-input" type="checkbox" name="role[]" value="{{ $role->id }}" id="role_{{ $role->id }}">
+                                            <label class="form-check-label" for="role_{{ $role->id }}">
+                                                {{ $role->name }}
+                                            </label>
+                                        </div>
+                                    @endif
                                 @endforeach
                             </div>
 

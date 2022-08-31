@@ -23,7 +23,10 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Geração de release automática
+            - Correções de Permissão
+            - Correções de Bugs
+            - Melhorias de Performance
+            - Ordenação de algumas tabelas
 
           draft: false
           prerelease: false

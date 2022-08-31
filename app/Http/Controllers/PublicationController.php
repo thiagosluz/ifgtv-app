@@ -43,9 +43,7 @@ class PublicationController extends Controller
      */
     public function index()
     {
-//        $publications = Publication::with('user')->orderBy('created_at', 'desc')->paginate(10);
         $publications = Publication::sortable(['id' => 'desc'])->with('user')->paginate(10);
-//        Log::info('teste');
         return view('sistema.publications.index', compact('publications'));
     }
 

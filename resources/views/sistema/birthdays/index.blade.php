@@ -28,8 +28,8 @@
                         <table id="example1" class="table table-striped table-hover">
                             <thead>
                             <tr>
-                                <th>Nome</th>
-                                <th>Data</th>
+                                <th>@sortablelink('name','Nome')</th>
+                                <th>@sortablelink('birthday','Aniversário')</th>
                                 <th style="width:300px">Ações</th>
                             </tr>
                             </thead>
@@ -75,7 +75,8 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer clearfix">
-                        {!! $birthdays->withQueryString()->links('pagination::bootstrap-5') !!}
+{{--                        {!! $birthdays->withQueryString()->links('pagination::bootstrap-5') !!}--}}
+                        {!! $birthdays->appends(Request::except('page'))->links('pagination::bootstrap-5')  !!}
                     </div>
 
 

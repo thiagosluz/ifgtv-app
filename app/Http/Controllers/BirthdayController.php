@@ -25,7 +25,7 @@ class BirthdayController extends Controller
      */
     public function index()
     {
-        $birthdays = Birthday::paginate(10);
+        $birthdays = Birthday::sortable(['name' => 'asc'])->paginate(10);
         return view('sistema.birthdays.index', compact('birthdays'));
     }
 

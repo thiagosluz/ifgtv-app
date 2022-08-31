@@ -28,7 +28,9 @@
                         <table id="example1" class="table table-striped table-hover">
                             <thead>
                             <tr>
-                                <th>Nome</th>
+                                <th>@sortablelink('id','ID')</th>
+                                <th>@sortablelink('name','Nome')</th>
+                                <th>@sortablelink('email','Email')</th>
                                 <th>Regra</th>
                                 <th style="width:300px">Ações</th>
                             </tr>
@@ -36,8 +38,9 @@
                             <tbody>
                             @forelse($users as $user)
                                 <tr>
+                                    <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
-
+                                    <td>{{ $user->email }}</td>
                                     <td>
                                         @foreach($user->roles as $role)
                                             <span class="badge badge-primary">{{ $role->name }}</span>
@@ -45,27 +48,29 @@
                                     </td>
 
                                     <td>
-                                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-sm">
-                                            <i class="fas fa-eye"></i> Visualizar
-                                        </a>
-                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">
-                                            <i class="fas fa-edit"></i> Editar
-                                        </a>
+                                        @if(!$user->hasRole('Super-Admin'))
+{{--                                            temporariamente desabilitada, por não haver necessidade--}}
+{{--                                            <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-sm">--}}
+{{--                                                <i class="fas fa-eye"></i> Visualizar--}}
+{{--                                            </a>--}}
+                                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </a>
 
-                                        <form class="form-deletar" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm btn-deletar">
-                                                <i class="fas fa-trash"></i> Deletar
-                                            </button>
-                                        </form>
-
+                                            <form class="form-deletar" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm btn-deletar">
+                                                    <i class="fas fa-trash"></i> Deletar
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
 
                                 </tr>
                             @empty
                                 <tr class="text-center">
-                                    <td colspan="2">Nenhum registro encontrado!</td>
+                                    <td colspan="5">Nenhum registro encontrado!</td>
                                 </tr>
                             @endforelse
                             </tbody>

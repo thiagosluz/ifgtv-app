@@ -35,8 +35,9 @@ class ImagemOtimizarJob implements ShouldQueue
      */
     public function handle()
     {
-        $pathToImage = public_path('publish/tv/'. $this->imagem .'.png');
+        $pathToImage = public_path('publish/tv/'. $this->imagem .'.webp');
         ImageOptimizer::optimize($pathToImage);
+
         Log::info('Imagem otimizada: ' . $this->imagem);
     }
 }

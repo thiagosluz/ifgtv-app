@@ -159,6 +159,7 @@
                 @endif
 
                 @empty
+{{--                    imagem normal de quando não tiver publicações--}}
                         <img class="image-news" src="{{ asset('publish/tv/0.png' ) }}" />
                 @endforelse
 
@@ -168,7 +169,7 @@
 <script>
 
     // Configurações
-    var secondsPerPage = 30; // tempo em segundos para cada página
+    var secondsPerPage = {{ $config->slide_time }}; // tempo em segundos para cada página
     var pages = $("news-panel").children.length;
 
 
@@ -213,6 +214,10 @@
         $("news-1").classList.add("visible");
         setInterval(change, secondsPerPage * 1000);
     }
+
+//    var vid = document.getElementById("myVideo");
+//     vid.autoplay = true;
+//     vid.load();
 </script>
 </body>
 </html>

@@ -23,10 +23,9 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Correções de Permissão
-            - Correções de Bugs
-            - Melhorias de Performance
-            - Ordenação de algumas tabelas
+            - Melhoria na compressão de imagens
+            - Cron para limpar imagens antigas
+            - Melhoria na segurança
 
           draft: false
           prerelease: false

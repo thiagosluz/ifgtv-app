@@ -10,6 +10,7 @@ use App\Models\Publication;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -72,7 +73,7 @@ class PublicationController extends Controller
         if ($request->tipo == 'imagem') {
             $request->validate([
                 'titulo' => 'required|max:255',
-                'imagem' => 'required|image|mimes:jpeg,png,jpg,svg',
+                'imagem' => 'required|image|mimes:jpeg,png,jpg,svg,webp',
             ]);
         }elseif ($request->tipo == 'video') {
             $request->validate([
@@ -110,7 +111,7 @@ class PublicationController extends Controller
                         $constraint->aspectRatio();
                     });
                     $canvas->insert($image, 'center');
-                    $canvas->save(public_path('publish/tv/'. $fileName .'.png'));
+                    $canvas->save(public_path('publish/tv/'. $fileName .'.webp'));
 //                  chamar job para otimizar imagem
                     dispatch(new ImagemOtimizarJob($fileName));
 
@@ -128,7 +129,7 @@ class PublicationController extends Controller
             $publication->titulo = $request->titulo;
             $publication->texto = $request->texto;
             if ($request->tipo == 'imagem') {
-                $publication->imagem = $fileName .'.png';
+                $publication->imagem = $fileName .'.webp';
                 $publication->tipo = 'imagem';
             }elseif ($request->tipo == 'video') {
                 $publication->imagem = $fileName .'.mp4';
@@ -216,7 +217,7 @@ class PublicationController extends Controller
             if ($publication->tipo == 'imagem') {
                 $request->validate([
                     'titulo' => 'required|max:255',
-                    'imagem' => 'required|image|mimes:jpeg,png,jpg,svg',
+                    'imagem' => 'required|image|mimes:jpeg,png,jpg,svg,webp',
                 ]);
             }elseif ($publication->tipo == 'video') {
                 $request->validate([
@@ -253,7 +254,7 @@ class PublicationController extends Controller
                             $constraint->aspectRatio();
                         });
                         $canvas->insert($image, 'center');
-                        $canvas->save(public_path('publish/tv/'. $fileName .'.png'));
+                        $canvas->save(public_path('publish/tv/'. $fileName .'.webp'));
                         //                  chamar job para otimizar imagem
                         dispatch(new ImagemOtimizarJob($fileName));
 
@@ -269,7 +270,7 @@ class PublicationController extends Controller
                 $publication->titulo = $request->titulo;
                 $publication->texto = $request->texto;
                 if ($publication->tipo == 'imagem') {
-                    $publication->imagem = $fileName .'.png';
+                    $publication->imagem = $fileName .'.webp';
                     $publication->tipo = 'imagem';
                 }elseif ($publication->tipo == 'video') {
                     $publication->imagem = $fileName .'.mp4';

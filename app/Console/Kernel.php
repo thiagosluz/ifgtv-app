@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:clean')->dailyAt('01:00')->runInBackground();
         $schedule->command('backup:run')->dailyAt('01:30')->runInBackground();
         $schedule->command('post:aniversario')->dailyAt('00:30')->runInBackground();
+        $schedule->command('limpar:arquivos')->dailyAt('00:00')->runInBackground();
     }
 
     /**

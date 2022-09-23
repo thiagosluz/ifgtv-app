@@ -34,7 +34,7 @@
                         <div class="btn-group">
                             <form action="{{ route('publications.publicar', $publication->id) }}" method="POST">
                                 @csrf
-                                @if($publication->publicado == 0)
+                                @if($publication->publicado == 0 && $publication->status != 4)
                                 <button id="btn_submit"  type="submit" class="btn btn-outline-success btn-flat" data-toggle="tooltip" title="Aprovando, será exibido em todas as TVs"><i class="fas fa-check"></i> Aprovar publicação</button>
                                 @else
                                 <button class="btn btn-outline-success btn-flat" data-toggle="tooltip" title="Aprovando, será exibido em todas as TVs" disabled><i class="fas fa-check"></i> Publicação já aprovada</button>
@@ -51,7 +51,8 @@
 
 {{--                    permission:publications-edit--}}
                         @can('publications-edit')
-                            @if($publication->publicado == 0)
+{{--                            //se a publicação estiver publicada ou status for diferente de 4 (agendado) mostra o botão de editar--}}
+                            @if($publication->publicado == 0 && $publication->status != 4)
                                 <div class="btn-group">
                                     <a href="{{ route('publications.edit', $publication->id) }}" class="btn btn-outline-warning btn-flat">
                                         <i class="fas fa-edit"></i>

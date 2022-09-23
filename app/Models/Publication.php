@@ -12,7 +12,7 @@ class Publication extends Model
     use HasFactory, softDeletes, Sortable;
 
 
-    protected $dates = ['created_at', 'updated_at', 'deleted_at', 'data_expiracao'];
+    protected $dates = ['created_at', 'updated_at', 'deleted_at', 'data_expiracao', 'data_lancamento', 'data_publicacao'];
 
     public $sortable = ['id', 'titulo', 'tipo', 'user_id', 'data_expiracao', 'status', 'publicado'];
 

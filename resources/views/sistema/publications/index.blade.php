@@ -56,6 +56,8 @@
                                             <span class="badge badge-danger">Rejeitado</span>
                                         @elseif($publication->status == 3)
                                             <span class="badge badge-success">Publicado</span>
+                                        @elseif($publication->status == 4)
+                                            <span class="badge badge-secondary">Agendado</span>
                                         @endif
 
                                     </td>

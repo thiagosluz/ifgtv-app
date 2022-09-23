@@ -254,6 +254,7 @@ class PublicationController extends Controller
                             $constraint->aspectRatio();
                         });
                         $canvas->insert($image, 'center');
+                        //salvar em webp
                         $canvas->save(public_path('publish/tv/'. $fileName .'.webp'));
                         //                  chamar job para otimizar imagem
                         dispatch(new ImagemOtimizarJob($fileName));

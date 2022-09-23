@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('titulo');
+            $table->date('data_lancamento')->nullable();
             $table->date('data_expiracao')->nullable();
             $table->dateTime('data_publicacao')->nullable();
             $table->text('imagem')->nullable();

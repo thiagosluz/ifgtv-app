@@ -13,6 +13,7 @@
         "jeroennoten/laravel-adminlte": "^3.8",
         "kyslik/column-sortable": "^6.4",
         "laravel/framework": "^9.11",
+        "laravel/horizon": "^5.10",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
@@ -50,7 +51,8 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan horizon:publish --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

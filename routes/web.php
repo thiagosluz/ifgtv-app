@@ -35,6 +35,8 @@ Route::post('publications/publicar/{publications}', [App\Http\Controllers\Public
 Route::get('teste', [App\Http\Controllers\PublicationController::class, 'imagemText'])->name('publications.teste');
 
 Route::resource('birthdays', App\Http\Controllers\BirthdayController::class);
+Route::post('birthdays-import',[App\Http\Controllers\BirthdayController::class, 'fileImport'])->name('birthdays.import');
+Route::get('birthdays-modelo',[App\Http\Controllers\BirthdayController::class, 'modelo'])->name('birthdays.modelo');
 Route::get('config', [App\Http\Controllers\ConfigController::class, 'index'])->name('config.index');
 Route::put('config/{config}', [App\Http\Controllers\ConfigController::class, 'update'])->name('config.update');
 

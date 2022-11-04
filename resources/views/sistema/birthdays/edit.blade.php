@@ -47,7 +47,7 @@
                                                    data-target="#datetimepicker1"
                                                    class="form-control @error('birthday') is-invalid @enderror datetimepicker-input"
                                                    placeholder="Data de aniversário"
-                                                   value="{{ old('birthday') }}">
+                                                   value="{{ $birthday->birthday->format('d/m/Y') }}">
                                             <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -99,7 +99,7 @@
             minDate: '2022-01-01',
             daysOfWeekDisabled: [0, 6],
             useCurrent: false,
-            defaultDate: moment('{{ $birthday->birthday->format('d/m/Y') }}', 'DD/MM/YYYY'),
+
         });
     });
 </script>

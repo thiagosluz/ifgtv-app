@@ -83,7 +83,7 @@ class PageSeeder extends Seeder
             'url' => 'birthdays',
             'icon' => 'fas fa-fw fa-birthday-cake',
             'order' => 8,
-            'can' => 'birthday-list',
+            'can' => 'birthdays-list',
         ]);
 
         //criar pagina de configurações

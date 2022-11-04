@@ -53,6 +53,10 @@ RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.1
 RUN groupadd --force -g $WWWGROUP sail
 RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
 
+# copy files and set permissions
+RUN chown sail:sail -R /var/www
+RUN chmod 0775 -R /var/www
+
 COPY scheduler /etc/cron.d/scheduler
 
 RUN chmod 0644 /etc/cron.d/scheduler \

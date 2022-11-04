@@ -23,10 +23,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Importação de CSV de aniversariantes
-            - Docker SAIL implatando
-            - Pacote Horizon instalado para monitoramento de Jobs
-            - Melhoria de desempenho e correções de bugs
+            - Configurado o Laravel Octane com RoadRunner
 
           draft: false
           prerelease: false

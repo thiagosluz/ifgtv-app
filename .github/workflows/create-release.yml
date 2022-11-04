@@ -23,9 +23,10 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Melhoria na compressão de imagens
-            - Cron para limpar imagens antigas
-            - Melhoria na segurança
+            - Importação de CSV de aniversariantes
+            - Docker SAIL implatando
+            - Pacote Horizon instalado para monitoramento de Jobs
+            - Melhoria de desempenho e correções de bugs
 
           draft: false
           prerelease: false

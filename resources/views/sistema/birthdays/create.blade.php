@@ -61,6 +61,56 @@
 
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="callout callout-info">
+                    <h5><i class="fas fa-info"></i> Importação:</h5>
+                    Pode ser feito uma importação de arquivo CSV contendo Nome do aniversariante e a data de aniversário. O modelo pode ser baixado:
+                    <a href="{{ route('birthdays.modelo') }}">Download arquivo modelo</a>
+
+                    </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                    <h3 class="card-title">Importação de arquivo CSV</h3>
+                    </div>
+
+
+                    <form action="{{ route('birthdays.import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                    <div class="card-body">
+
+
+                    <div class="form-group">
+                    <label for="exampleInputFile">Aquivo CSV</label>
+                    <div class="input-group">
+                    <div class="custom-file">
+                    <input id="input-file" type="file" name="file" class="form-control @error('file') is-invalid @enderror">
+
+                    @error('file')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+                    </div>
+
+                    </div>
+                    </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Importar</button>
+                    </div>
+                    </form>
+
+                    </div>
+            </div>
+        </div>
     </div>
 
 @stop

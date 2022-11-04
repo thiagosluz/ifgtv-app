@@ -18,8 +18,10 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
         "laravelcollective/html": "^6.3",
+        "maatwebsite/excel": "^3.1",
         "masbug/flysystem-google-drive-ext": "^2.2",
         "pavel-mironchik/laravel-backup-panel": "^2.2",
+        "psr/simple-cache": "^2.0",
         "spatie/laravel-backup": "^8.1",
         "spatie/laravel-image-optimizer": "^1.7",
         "spatie/laravel-permission": "^5.5"

@@ -7,14 +7,14 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class TesteCron extends Command
+class ParseDateBirthdayCron extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cron:teste';
+    protected $signature = 'parse:birthday';
 
     /**
      * The console command description.
@@ -30,11 +30,16 @@ class TesteCron extends Command
      */
     public function handle()
     {
-        $birt = Birthday::first();
+        $birts = Birthday::all();
 
-        dd($birt);
+        foreach($birts as $birt){
+            $data_format = Carbon::parse($birt->birthday)->year(now()->format('Y'))->format('Y-m-d');
+            $birt->birthday = $data_format;
+            $birt->update();
+        }
 
-        Log::debug('teste');
+        Log::debug('datas convertidas para o ano atual');
+
         return Command::SUCCESS;
     }
 }

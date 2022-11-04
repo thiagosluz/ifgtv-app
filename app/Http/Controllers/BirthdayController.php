@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\BirthdayImport;
+use App\Jobs\BirthdayImportJob;
 use App\Models\Birthday;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BirthdayController extends Controller
 {
@@ -127,4 +130,22 @@ class BirthdayController extends Controller
         }
 
     }
+
+    public function fileImport(Request $request)
+    {
+        $request->validate([
+            'file' => 'required'
+        ]);
+
+        //Excel::import(new BirthdayImport, $request->file('file')->store('temp'));
+        dispatch(new BirthdayImportJob( $request ));
+        return redirect()->route('birthdays.index')->with('success', 'Estamos fazendo a importação, em breve os aniversáriantes estarão importados!');
+    }
+
+
+    public function modelo()
+    {
+        return response()->download(public_path('csv/aniversarios.csv'));
+    }
+
 }

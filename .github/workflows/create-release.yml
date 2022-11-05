@@ -23,7 +23,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Configurado o Laravel Octane com RoadRunner
+            - Correção do Laravel Octane
 
           draft: false
           prerelease: false

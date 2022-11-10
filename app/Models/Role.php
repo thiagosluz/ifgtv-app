@@ -8,7 +8,6 @@ class Role extends SpatieRole
 {
     public function usuarios()
     {
-        return $this->hasMany('App\User');
+        return $this->hasMany('App\Models\User');
     }
-
 }

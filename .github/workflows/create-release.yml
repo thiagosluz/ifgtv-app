@@ -23,7 +23,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Correção do Laravel Octane
+            - Atualização de visualização das regras e permissões
 
           draft: false
           prerelease: false

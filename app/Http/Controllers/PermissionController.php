@@ -12,7 +12,7 @@ class PermissionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:permissions-list|permissions-create|permissions-edit|permissions-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:permissions-list|permissions-create|permissions-edit|permissions-delete', ['only' => ['index', 'show']]);
         $this->middleware('permission:permissions-create')->only(['create', 'store']);
         $this->middleware('permission:permissions-edit')->only(['edit', 'update']);
         $this->middleware('permission:permissions-delete')->only('destroy');
@@ -55,11 +55,11 @@ class PermissionController extends Controller
             'name.unique' => 'o nome informado já existe',
         ]);
 
-        try{
+        try {
             Permission::create(['name' => $request->name]);
             return redirect()->route('permissions.index')->with('success', 'Permissão criada com sucesso!');
-        }catch (\Exception $e){
-            Log::error('erro ao criar permissão : ' .$e->getMessage());
+        } catch (\Exception $e) {
+            Log::error('erro ao criar permissão : ' . $e->getMessage());
             return redirect()->back()->with('error', 'Erro ao criar permissão!');
         }
     }
@@ -72,7 +72,7 @@ class PermissionController extends Controller
      */
     public function show(Permission $permission)
     {
-        //
+        return view('sistema.permissions.show', compact('permission'));
     }
 
     /**
@@ -96,18 +96,18 @@ class PermissionController extends Controller
     public function update(Request $request, Permission $permission)
     {
         $this->validate($request, [
-            'name' => 'required|max:255|unique:permissions,name,'.$permission->id,
+            'name' => 'required|max:255|unique:permissions,name,' . $permission->id,
         ], [
             'name.required' => 'o campo nome é obrigatório',
             'name.max' => 'o campo nome deve ter no máximo 255 caracteres',
             'name.unique' => 'o nome informado já existe',
         ]);
 
-        try{
+        try {
             $permission->update(['name' => $request->name]);
             return redirect()->route('permissions.index')->with('success', 'Permissão atualizada com sucesso!');
-        }catch (\Exception $e){
-            Log::error('erro ao atualizar permissão : ' .$e->getMessage());
+        } catch (\Exception $e) {
+            Log::error('erro ao atualizar permissão : ' . $e->getMessage());
             return redirect()->back()->with('error', 'Erro ao atualizar permissão!');
         }
     }
@@ -120,10 +120,10 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        try{
+        try {
             $permission->delete();
             return redirect()->route('permissions.index')->with('success', 'Permissão deletada com sucesso!');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             Log::error('Erro ao deletar permissão : ' . $e->getMessage());
             return redirect()->route('permissions.index')->with('error', 'Erro ao deletar a permissão!');
         }

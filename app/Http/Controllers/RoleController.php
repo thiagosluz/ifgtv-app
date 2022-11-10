@@ -13,7 +13,7 @@ class RoleController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:roles-list|roles-create|roles-edit|roles-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:roles-list|roles-create|roles-edit|roles-delete', ['only' => ['index', 'show']]);
         $this->middleware('permission:roles-create')->only(['create', 'store']);
         $this->middleware('permission:roles-edit')->only(['edit', 'update']);
         $this->middleware('permission:roles-delete')->only('destroy');
@@ -26,10 +26,10 @@ class RoleController extends Controller
      */
     public function index()
     {
-//        //teste de criação de regras
-//        for($i=0;$i<10;$i++){
-//            $role3 = Role::create(['name' => 'teste_'.$i]);
-//        }
+        //        //teste de criação de regras
+        //        for($i=0;$i<10;$i++){
+        //            $role3 = Role::create(['name' => 'teste_'.$i]);
+        //        }
 
         $roles = Role::paginate(10);
         return view('sistema.roles.index', compact('roles'));
@@ -54,7 +54,8 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,
+        $this->validate(
+            $request,
             [
                 'name' => 'required|unique:roles,name|max:255',
                 'permissions' => 'required',
@@ -64,7 +65,8 @@ class RoleController extends Controller
                 'name.unique' => 'O nome da regra já existe',
                 'name.max' => 'O nome da regra deve ter no máximo 255 caracteres',
                 'permissions.required' => 'Selecione pelo menos uma permissão',
-            ]);
+            ]
+        );
 
         try {
             $role = Role::create(['name' => $request->name]);
@@ -84,7 +86,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        return view('sistema.roles.show', compact('role'));
     }
 
     /**
@@ -108,9 +110,10 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        $this->validate($request,
+        $this->validate(
+            $request,
             [
-                'name' => 'required|max:255|unique:roles,name,'.$role->id,
+                'name' => 'required|max:255|unique:roles,name,' . $role->id,
                 'permissions' => 'required',
             ],
             [
@@ -118,7 +121,8 @@ class RoleController extends Controller
                 'name.max' => 'O nome da regra deve ter no máximo 255 caracteres',
                 'name.unique' => 'O nome da regra já existe',
                 'permissions.required' => 'Selecione pelo menos uma permissão',
-            ]);
+            ]
+        );
 
         try {
             $role->update(['name' => $request->name]);
@@ -138,13 +142,12 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        try{
+        try {
             $role->delete();
             return redirect()->route('roles.index')->with('success', 'Regra deletada com sucesso!');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             Log::error('Erro ao deletar regra : ' . $e->getMessage());
             return redirect()->route('roles.index')->with('error', 'Erro ao deletar a regra!');
         }
-
     }
 }

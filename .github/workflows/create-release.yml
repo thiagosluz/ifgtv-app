@@ -23,7 +23,8 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Atualização de visualização das regras e permissões
+            - modificação do docker-compose para a imagem subir quando o sistema operacional iniciar
+            - Correção do timezone para America/Sao_Paulo
 
           draft: false
           prerelease: false

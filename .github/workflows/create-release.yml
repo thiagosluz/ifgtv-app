@@ -23,8 +23,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - modificação do docker-compose para a imagem subir quando o sistema operacional iniciar
-            - Correção do timezone para America/Sao_Paulo
+            - Adicionado grafico de postagens na tela home
 
           draft: false
           prerelease: false

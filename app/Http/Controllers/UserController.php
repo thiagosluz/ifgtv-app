@@ -188,6 +188,9 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
+
+      //  dd(isset($request->receber_notificacoes));
+
         $user = auth()->user();
         $this->validate($request, [
             'name' => 'required|string|max:255',
@@ -204,6 +207,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => $request->password ? bcrypt($request->password) : $user->password,
+                'receber_notificacoes' => isset($request->receber_notificacoes) ? 1 : 0,
             ]);
             return redirect()->route('home')->with('success', 'Perfil atualizado com sucesso!');
         }catch (\Exception $e) {

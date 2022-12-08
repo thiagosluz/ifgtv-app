@@ -63,6 +63,23 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group">
+                                <label for="receber_notificacoes">Receber emails de aprovação de publicações?</label>
+                                <input id="receber_notificacoes" name="receber_notificacoes" type="checkbox" @if( $user->receber_notificacoes ) checked @endif
+                                data-toggle="toggle"
+                                       data-on="SIM"
+                                       data-off="NÃO"
+                                       data-size="xs"
+                                       data-onstyle="outline-success"
+                                       data-offstyle="outline-danger">
+                                @error('receber_notificacoes')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+
+
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-success float-right">Atualizar</button>
@@ -84,9 +101,11 @@
 @section('adminlte_css')
 {{--    <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">--}}
 {{--    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">--}}
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 @stop
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 {{--    @include('layouts.delete_sweetalert')--}}
 {{--    @include('layouts.erros_toast')--}}
 @stop

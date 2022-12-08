@@ -23,7 +23,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Adicionado grafico de postagens na tela home
+            - Add new feature para o usuário escolher se quer ou não receber notificações por email quando um novo post for criado
 
           draft: false
           prerelease: false

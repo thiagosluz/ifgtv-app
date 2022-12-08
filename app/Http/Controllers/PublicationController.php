@@ -145,7 +145,10 @@ class PublicationController extends Controller
             //enviar email para todos os usuários com permissão de publicar
             $role = Role::with('users')->where('name', 'moderador')->first();
             foreach ($role->users as $user) {
-                dispatch(new SendEmailJob($publication, 'Nova Publicação', $user->email));
+                //if receber_notificacoes is true
+                if ($user->receber_notificacoes) {
+                    dispatch(new SendEmailJob($publication, 'Nova Publicação', $user->email));
+                }
             }
 
 //            logs de criação de publicação

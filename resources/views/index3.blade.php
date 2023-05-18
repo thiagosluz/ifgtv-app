@@ -75,13 +75,13 @@
 
     <div class="mySlides fade">
         <div class="numbertext">1 / 3</div>
-        <img src="{{ asset('publish/tv/publi_tv_1653667732.png') }}" style="width:100%">
+        <img src="{{ asset('publish/tv/7.png') }}" style="width:100%">
         <div class="text">Caption Text</div>
     </div>
 
     <div class="mySlides fade">
         <div class="numbertext">2 / 3</div>
-        <img src="{{ asset('publish/tv/modelo1.jpg') }}" style="width:100%">
+        <img src="{{ asset('publish/tv/6.png') }}" style="width:100%">
         <div class="text">Caption Two</div>
     </div>
 

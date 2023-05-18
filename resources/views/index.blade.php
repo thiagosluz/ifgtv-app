@@ -167,7 +167,7 @@
 
                     @elseif($publication->tipo == 'texto')
 
-                    <img src="{{ asset('publish/tv/modelo4.png' ) }}" class="d-block w-100 h-100" alt="Wild Landscape"/>
+                    <img src="{{ asset('publish/tv/1.png' ) }}" class="d-block w-100 h-100" alt="Wild Landscape"/>
                     <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)">
                         <div class="d-flex justify-content-center align-items-center h-100">
 
@@ -200,7 +200,7 @@
                 </div>
 
             @empty
-                <img src="{{ asset('publish/tv/teste.gif'  ) }}" class="d-block w-100 h-100" alt="Wild Landscape"/>
+                <img src="{{ asset('publish/tv/1.png' ) }}" class="d-block w-100 h-100" alt="Wild Landscape"/>
 {{--                <div class="carousel-item active" data-mdb-interval="{{ config('ifgtv.duracao_slides') }}">--}}
 {{--                    <video--}}
 {{--                        style="min-width: 100%; min-height: 100%"--}}

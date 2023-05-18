@@ -216,4 +216,26 @@ class UserController extends Controller
         }
     }
 
+    //função para enviar email de recuperação de senha
+    public function sendPasswordResetLink(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email|exists:users',
+        ], [
+            'email.required' => 'o campo email é obrigatório',
+            'email.exists' => 'o email informado não existe',
+        ]);
+
+        try {
+            $user = User::where('email', $request->email)->first();
+            $token = app('auth.password.broker')->createToken($user);
+            $user->sendPasswordResetNotification($token);
+            return redirect()->route('login')->with('success', 'Email enviado com sucesso!');
+        }catch (\Exception $e) {
+            Log::error('Erro ao enviar email: ' . $e->getMessage());
+            return redirect()->route('login')->with('error', 'Erro ao enviar email!');
+        }
+    }
+
+
 }

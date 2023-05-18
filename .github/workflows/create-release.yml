@@ -23,7 +23,9 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Add new feature para o usuário escolher se quer ou não receber notificações por email quando um novo post for criado
+            - Correção de bugs
+            - Melhorias de performance
+            - Atualização de dependências
 
           draft: false
           prerelease: false

@@ -7,6 +7,7 @@ use App\Jobs\BirthdayImportJob;
 use App\Models\Birthday;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BirthdayController extends Controller
@@ -26,9 +27,17 @@ class BirthdayController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request): View
     {
-        $birthdays = Birthday::sortable(['name' => 'asc'])->paginate(10);
+        if($request->filled('search')){
+            $birthdays = Birthday::search($request->search)
+                ->within('name_desc')
+                ->paginate(10);
+        }else{
+            $birthdays = Birthday::sortable(['name' => 'asc'])->paginate(10);
+        }
+
+
         return view('sistema.birthdays.index', compact('birthdays'));
     }
 

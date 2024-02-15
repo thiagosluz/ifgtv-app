@@ -26,6 +26,8 @@ jobs:
             - Correção de bugs
             - Melhorias de performance
             - Atualização de dependências
+            - Laravel Scout adicionado para pesquisa de aniversariantes
+            - adição da função despublicar postagens
 
           draft: false
           prerelease: false

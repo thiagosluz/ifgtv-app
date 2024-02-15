@@ -423,4 +423,29 @@ class PublicationController extends Controller
     }
 
 
+    public function despublicar($id)
+    {
+        $publication = Publication::findOrFail($id);
+        $user = auth()->user();
+
+        if ( ($user->id == $publication->user_id) || ($user->can('publications-moderador')) ) {
+
+            try {
+                $publication->publicado = false;
+                $publication->status = 1;
+                $publication->update();
+                dispatch(new LogsPublicationJob( $publication->id, $user->id, 'despublicou a postagem.' ));
+                return redirect()->route('publications.index')->with('success', 'Postagem despublicada com sucesso!');
+            }catch (\Exception $e) {
+                Log::error('Não foi possível despublicar a postagem: ' . $e->getMessage());
+                return redirect()->route('publications.index')->with('error', 'Não foi possível despublicar!');
+            }
+
+        }else{
+            return redirect()->route('publications.index')->with('error', 'Você não tem permissão para despublicar esta publicação');
+        }
+
+    }
+
+
 }

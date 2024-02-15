@@ -8,6 +8,37 @@
 
 @section('content')
 
+{{-- div para a pesquisa dos aniversariantes --}}
+    <div class="div container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+{{--                adicionar um card --}}
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">Pesquisar aniversariantes</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="GET">
+                            <div class="input-group mb-3">
+                                <input
+                                    type="text"
+                                    name="search"
+                                    value="{{ request()->get('search') }}"
+                                    class="form-control"
+                                    placeholder="Nome da pessoa..."
+                                    aria-label="Search"
+                                    aria-describedby="button-addon2">
+                                <button class="btn btn-success" type="submit" id="button-addon2">Pesquisar</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 
     <div class="container-fluid">
         <div class="row">
@@ -29,9 +60,16 @@
                         <table id="example1" class="table table-striped table-hover">
                             <thead>
                             <tr>
-                                <th>@sortablelink('name','Nome')</th>
-                                <th>@sortablelink('birthday','Aniversário')</th>
-                                <th style="width:300px">Ações</th>
+{{--                                se existir o get search não mostrar o sortablelink --}}
+                                @if(request()->get('search'))
+                                    <th>Nome</th>
+                                    <th>Aniversário</th>
+                                    <th style="width:300px">Ações</th>
+                                @else
+                                    <th>@sortablelink('name','Nome')</th>
+                                    <th>@sortablelink('birthday','Aniversário')</th>
+                                    <th style="width:300px">Ações</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>

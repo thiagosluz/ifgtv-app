@@ -86,7 +86,21 @@
                         </div>
                         @endcan
 
-                    {{--fim de controles de ações--}}
+{{--                        @can('publications-moderador')--}}
+                            @if($publication->publicado == 1)
+                                <div class="btn-group">
+                                    <form action="{{ route('publications.despublicar', $publication->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-outline-danger btn-flat" data-toggle="tooltip" title="Despublicar a postagem">
+                                            <i class="fas fa-times"></i> Despublicar postagem
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
+{{--                        @endcan--}}
+
+
+                        {{--fim de controles de ações--}}
 
 
                     </div>

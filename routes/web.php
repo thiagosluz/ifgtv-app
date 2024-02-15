@@ -32,6 +32,7 @@ Route::prefix('admin')->group(function () {
 Route::resource('publications', App\Http\Controllers\PublicationController::class);
 Route::get('publications/previa/{publications}', [App\Http\Controllers\PublicationController::class, 'previa'])->name('publications.previa');
 Route::post('publications/publicar/{publications}', [App\Http\Controllers\PublicationController::class, 'post'])->name('publications.publicar');
+Route::post('/publications/{id}/despublicar', [App\Http\Controllers\PublicationController::class, 'despublicar'])->name('publications.despublicar');
 Route::get('teste', [App\Http\Controllers\PublicationController::class, 'imagemText'])->name('publications.teste');
 
 Route::resource('birthdays', App\Http\Controllers\BirthdayController::class);

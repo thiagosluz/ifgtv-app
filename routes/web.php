@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index']);
+//rota de teste
+Route::get('/teste', [App\Http\Controllers\IndexController::class, 'teste']);
 
 Auth::routes();
 
@@ -33,7 +35,7 @@ Route::resource('publications', App\Http\Controllers\PublicationController::clas
 Route::get('publications/previa/{publications}', [App\Http\Controllers\PublicationController::class, 'previa'])->name('publications.previa');
 Route::post('publications/publicar/{publications}', [App\Http\Controllers\PublicationController::class, 'post'])->name('publications.publicar');
 Route::post('/publications/{id}/despublicar', [App\Http\Controllers\PublicationController::class, 'despublicar'])->name('publications.despublicar');
-Route::get('teste', [App\Http\Controllers\PublicationController::class, 'imagemText'])->name('publications.teste');
+//Route::get('teste', [App\Http\Controllers\PublicationController::class, 'imagemText'])->name('publications.teste');
 
 Route::resource('birthdays', App\Http\Controllers\BirthdayController::class);
 Route::post('birthdays-import',[App\Http\Controllers\BirthdayController::class, 'fileImport'])->name('birthdays.import');

@@ -23,11 +23,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Correção de bugs
-            - Melhorias de performance
-            - Atualização de dependências
-            - Laravel Scout adicionado para pesquisa de aniversariantes
-            - adição da função despublicar postagens
+            - Novo Layout na route /teste, para melhorar a visualização em pcs e testar a responsividade
 
           draft: false
           prerelease: false

@@ -23,4 +23,11 @@ class IndexController extends Controller
         return view('carousel', compact('publications'));
     }
 
+    public function teste()
+    {
+        $publications = Publication::publicado()->exibir()->get();
+        $config = Config::first();
+        return view('index-teste', compact('publications', 'config'));
+    }
+
 }

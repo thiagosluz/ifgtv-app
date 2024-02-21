@@ -23,7 +23,8 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Novo Layout na route /teste, para melhorar a visualização em pcs e testar a responsividade
+            - Adicionado funcionalidade de agendamento de post
+            - Correção de frase de aniversário
 
           draft: false
           prerelease: false

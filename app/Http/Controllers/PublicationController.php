@@ -140,6 +140,15 @@ class PublicationController extends Controller
             }
             $publication->user_id = auth()->user()->id;
             $publication->data_expiracao = $request->data_expiracao;
+
+            if ($request->has('scheduled_at')) {
+                // Se uma data de agendamento foi fornecida, agende a postagem
+                $publication->data_lancamento = $request->scheduled_at;
+            } else {
+                // Se não houver data de agendamento, defina a data de agendamento como a data atual
+                $publication->data_lancamento = now();
+            }
+
             $publication->save();
 
             //enviar email para todos os usuários com permissão de publicar
@@ -285,6 +294,14 @@ class PublicationController extends Controller
                 }
 
                 $publication->data_expiracao = $request->data_expiracao;
+
+                if ($request->has('scheduled_at')) {
+                    // Se uma data de agendamento foi fornecida, agende a postagem
+                    $publication->data_lancamento = $request->scheduled_at;
+                } else {
+                    // Se não houver data de agendamento, defina a data de agendamento como a data atual
+                    $publication->data_lancamento = now();
+                }
 
                 $publication->update();
 

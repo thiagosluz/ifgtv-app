@@ -195,6 +195,18 @@
 
                             </div>
 
+                            {{-- Campo de agendamento --}}
+                            <div class="form-group col-md-2">
+                                <label for="scheduled_at">Agendar publicação</label>
+                                <input type="date" id="scheduled_at" name="scheduled_at" class="form-control @error('scheduled_at') is-invalid @enderror" value="{{ old('scheduled_at') }}">
+                                @error('scheduled_at')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+
+
                             {{-- Data Expiração --}}
                             <div class="form-group col-md-2">
                                 <label for="name">Data de expiração</label>

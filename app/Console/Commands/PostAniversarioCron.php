@@ -43,7 +43,7 @@ class PostAniversarioCron extends Command
             $config = Config::first();
 
             $publication = new Publication();
-            $publication->titulo = 'Feliz Aniversário<br>' . $birthday->birthday->translatedFormat('l\, j \de F');
+            $publication->titulo =  $birthday->birthday->translatedFormat('l\, j \de F') . '<br>Feliz Aniversário';
             $publication->texto = '<p style="text-align: center; "><b><i>' . $birthday->name . '</i></b>, ' . $config->birthday_message . '</p>';
             $publication->tipo = 'texto';
             $publication->imagem = 'aniversario';

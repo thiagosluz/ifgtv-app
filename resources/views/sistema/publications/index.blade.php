@@ -32,6 +32,7 @@
                                 <th>@sortablelink('titulo','Título')</th>
                                 <th>@sortablelink('Tipo','Tipo')</th>
                                 <th>@sortablelink('user.name','Criado por')</th>
+                                <th>@sortablelink('data_lancamento','Agendamento')</th>
                                 <th>@sortablelink('data_expiracao','Expira em')</th>
                                 <th>@sortablelink('status','Status')</th>
                                 <th>@sortablelink('publicado','Publicado?')</th>
@@ -46,6 +47,7 @@
                                     <td>{{ $publication->titulo }}</td>
                                     <td>{{ $publication->tipo }}</td>
                                     <td>{{ $publication->user->name }}</td>
+                                    <td>{{ is_null($publication->data_lancamento) ? '-' : $publication->data_lancamento->format('d/m/Y') }}</td>
                                     <td>{{ is_null($publication->data_expiracao) ? '-' : $publication->data_expiracao->format('d/m/Y') }}</td>
                                     <td>
                                         @if($publication->status == 0)

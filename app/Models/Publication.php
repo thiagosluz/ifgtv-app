@@ -14,7 +14,7 @@ class Publication extends Model
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'data_expiracao', 'data_lancamento', 'data_publicacao'];
 
-    public $sortable = ['id', 'titulo', 'tipo', 'user_id', 'data_expiracao', 'status', 'publicado'];
+    public $sortable = ['id', 'titulo', 'tipo', 'user_id', 'data_expiracao', 'status', 'publicado', 'data_lancamento'];
 
     public function user()
     {
@@ -29,8 +29,13 @@ class Publication extends Model
     //data de expiração
     public function scopeExibir($query)
     {
-        $query->WhereDate('data_expiracao', '>=', date('Y-m-d'))
-        ->orWhereNull('data_expiracao');
+        $query->where(function ($query) {
+            $query->whereDate('data_expiracao', '>=', date('Y-m-d'))
+                ->orWhereNull('data_expiracao');
+        })->where(function ($query) {
+            $query->where('data_lancamento', '<=', now())
+            ->orWhereNull('data_lancamento');// Adiciona condição para postagens agendadas
+        });
     }
 
 //    relações com History

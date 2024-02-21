@@ -183,8 +183,14 @@
                                 <dd>{{ $publication->user->name }}</dd>
                                 <dt>Criado em</dt>
                                 <dd>{{ $publication->created_at->format('d/m/Y') }}</dd>
+
+                                <dt>Agendado para</dt>
+                                <dd>{{ is_null($publication->data_lancamento) ? '-' : $publication->data_lancamento->format('d/m/Y') }}</dd>
+
                                 <dt>Expira em</dt>
                                 <dd>{{ is_null($publication->data_expiracao) ? '-' : $publication->data_expiracao->format('d/m/Y') }}</dd>
+
+
                                 <dt>Tipo</dt>
                                 <dd>{{ $publication->tipo }}</dd>
                                 <dt>Status</dt>

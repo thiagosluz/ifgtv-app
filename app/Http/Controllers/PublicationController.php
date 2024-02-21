@@ -163,7 +163,7 @@ class PublicationController extends Controller
 //            logs de criação de publicação
             dispatch(new LogsPublicationJob( $publication->id, auth()->user()->id, 'criou a publicação.' ));
 
-            return redirect()->route('publications.index')->with('success', 'Publicação criada com sucesso!');
+            return redirect()->route('publications.show', $publication->id)->with('success', 'Publicação criada com sucesso!');
 
         } catch (\Exception $e) {
             Log::error('Não foi possível criar a publicação: ' . $e->getMessage());
@@ -307,7 +307,7 @@ class PublicationController extends Controller
 
                 dispatch(new LogsPublicationJob( $publication->id, auth()->user()->id, 'atualizou a publicação.' ));
 
-                return redirect()->route('publications.index')->with('success', 'Publicação atualizada com sucesso!');
+                return redirect()->route('publications.show', $publication->id)->with('success', 'Publicação atualizada com sucesso!');
 
 
             }catch (\Exception $e) {
@@ -452,7 +452,7 @@ class PublicationController extends Controller
                 $publication->status = 1;
                 $publication->update();
                 dispatch(new LogsPublicationJob( $publication->id, $user->id, 'despublicou a postagem.' ));
-                return redirect()->route('publications.index')->with('success', 'Postagem despublicada com sucesso!');
+                return redirect()->route('publications.show', $publication->id)->with('success', 'Postagem despublicada com sucesso!');
             }catch (\Exception $e) {
                 Log::error('Não foi possível despublicar a postagem: ' . $e->getMessage());
                 return redirect()->route('publications.index')->with('error', 'Não foi possível despublicar!');

@@ -23,8 +23,8 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Adicionado funcionalidade de agendamento de post
-            - Correção de frase de aniversário
+            - Correção de algumas rotas de redirecionamento
+            - Melhoria no agendamento de postagens
 
           draft: false
           prerelease: false

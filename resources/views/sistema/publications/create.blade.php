@@ -63,7 +63,7 @@
 
                             {{-- Imagem --}}
                             <div class="form-group" id="div_imagem" style="display: none">
-                                <label for="name">Imagem</label>
+                                <label for="name">Imagem </label> (Sugestão de tamanho: largura 1200px; altura = 590px)
                                 <input type="file" name="imagem" class="form-control @error('imagem') is-invalid @enderror" placeholder="Imagem da publicação">
                                 @error('imagem')
                                     <div class="invalid-feedback">
@@ -195,28 +195,41 @@
 
                             </div>
 
-                            {{-- Campo de agendamento --}}
-                            <div class="form-group col-md-2">
-                                <label for="scheduled_at">Agendar publicação</label>
-                                <input type="date" id="scheduled_at" name="scheduled_at" class="form-control @error('scheduled_at') is-invalid @enderror" value="{{ old('scheduled_at') }}">
-                                @error('scheduled_at')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
+                            <div class="col-3">
 
 
-                            {{-- Data Expiração --}}
-                            <div class="form-group col-md-2">
-                                <label for="name">Data de expiração</label>
-                                <input type="date" name="data_expiracao" class="form-control @error('data_expiracao') is-invalid @enderror" placeholder="Data de expiração" value="{{ old('data_expiracao') }}">
-                                @error('data_expiracao')
+                                {{-- Data Expiração --}}
+                                <div class="form-group">
+                                    <label for="name">Data de expiração</label>
+                                    <input type="date" name="data_expiracao" class="form-control @error('data_expiracao') is-invalid @enderror" placeholder="Data de expiração" value="{{ old('data_expiracao') }}">
+                                    @error('data_expiracao')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
-                                @enderror
+                                    @enderror
+                                </div>
+
+                                {{-- Campo de agendamento --}}
+                                <div class="form-group clearfix">
+                                    <div class="icheck-success d-inline">
+                                        <input class="form-check-input" type="checkbox" id="agendar" name="agendar" value="1">
+                                        <label class="form-check-label" for="agendar">Agendar Publicação</label>
+                                    </div>
+                                </div>
+
+                                {{-- Campo de data de agendamento --}}
+                                <div class="form-group" id="campo_data_agendamento" style="display: none;">
+                                    <label for="scheduled_at">Data de agendamento</label>
+                                    <input type="date" id="scheduled_at" name="scheduled_at" class="form-control @error('scheduled_at') is-invalid @enderror" value="{{ old('scheduled_at') }}">
+                                    @error('scheduled_at')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
                             </div>
+
 
                         </div>
                         <div class="card-footer">
@@ -260,6 +273,14 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+
+        $('#agendar').change(function() {
+            if ($(this).is(":checked")) {
+                $('#campo_data_agendamento').show();
+            } else {
+                $('#campo_data_agendamento').hide();
+            }
+        });
 
         $(document).on('click', '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();

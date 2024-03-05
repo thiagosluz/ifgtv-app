@@ -8,6 +8,16 @@ use Illuminate\Validation\ValidationException;
 
 class SetorController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:setores-list|setores-create|setores-edit|setores-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:setores-create')->only(['create', 'store']);
+        $this->middleware('permission:setores-edit')->only(['edit', 'update']);
+        $this->middleware('permission:setores-delete')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *

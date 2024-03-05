@@ -113,15 +113,15 @@
         <br>
         <br>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="callout callout-info">
-                    <h5><i class="fas fa-info"></i> Histórico de postagens:</h5>
-                    <p>Esta é a lista de todas as publicações cadastradas no sistema. Aqui você pode visualizar, editar e excluir as publicações mais antigas.</p>
-                    <button type="button" class="btn btn-outline-info btn-flat"> Acesse o Historico</button>
-                </div>
-            </div>
-        </div>
+{{--        <div class="row">--}}
+{{--            <div class="col-md-12">--}}
+{{--                <div class="callout callout-info">--}}
+{{--                    <h5><i class="fas fa-info"></i> Histórico de postagens:</h5>--}}
+{{--                    <p>Esta é a lista de todas as publicações cadastradas no sistema. Aqui você pode visualizar, editar e excluir as publicações mais antigas.</p>--}}
+{{--                    <button type="button" class="btn btn-outline-info btn-flat"> Acesse o Historico</button>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
 
     </div>

@@ -23,8 +23,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Criação de setores
-            - Correção das permissões por setor
-
+            - Correção do index de publicação
+            - Add permissões nos Setores
           draft: false
           prerelease: false

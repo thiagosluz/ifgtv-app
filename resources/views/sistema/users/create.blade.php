@@ -63,6 +63,15 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="setor_id">Setor</label>
+                                <select name="setor_id" class="form-control">
+                                    @foreach($setores as $setor)
+                                        <option value="{{ $setor->id }}">{{ $setor->nome }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="permissions">Regras:</label>
                                 @error('role')
                                 <div class="invalid-feedback">
@@ -71,7 +80,7 @@
                                 @enderror
 
                                 @foreach($roles as $role)
-{{--                                não aparecer regra super-admin--}}
+                                    {{--                                não aparecer regra super-admin--}}
                                     @if($role->name != 'Super-Admin')
                                         <div class="form-check icheck-primary">
                                             <input class="form-check-input" type="checkbox" name="role[]" value="{{ $role->id }}" id="role_{{ $role->id }}">
@@ -96,19 +105,18 @@
         </div>
     </div>
 
-@stop
+    @stop
 
-@section('footer')
+    @section('footer')
         {{ config('adminlte.title') }} &copy; @php(print date('Y'))
 @stop
 
 @section('adminlte_css')
     <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-{{--    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">--}}
 @stop
 
 @section('js')
-{{--    @include('layouts.delete_sweetalert')--}}
-{{--    @include('layouts.erros_toast')--}}
+    {{--    @include('layouts.delete_sweetalert')--}}
+    {{--    @include('layouts.erros_toast')--}}
 @stop
-

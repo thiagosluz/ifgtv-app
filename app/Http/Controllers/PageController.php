@@ -26,7 +26,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = Page::orderBy('order')->paginate(10);
+        $pages = Page::orderBy('order')->paginate(30);
 
         return view('sistema.pages.index', compact('pages'));
     }

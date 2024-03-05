@@ -40,6 +40,12 @@ class SuperAdminSeeder extends Seeder
         $pageedit = Permission::create(['name' => 'pages-edit']);
         $pagedelete = Permission::create(['name' => 'pages-delete']);
 
+        //setores
+        $setores_list = Permission::create(['name' => 'setores-list']);
+        $setores_create = Permission::create(['name' => 'setores-create']);
+        $setores_edit = Permission::create(['name' => 'setores-edit']);
+        $setores_delete = Permission::create(['name' => 'setores-delete']);
+
         //users
         $users_list = Permission::create(['name' => 'users-list']);
         $users_create = Permission::create(['name' => 'users-create']);

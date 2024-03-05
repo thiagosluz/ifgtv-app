@@ -44,6 +44,11 @@ class Publication extends Model
         return $this->hasMany('App\Models\History')->orderBy('created_at', 'desc');
     }
 
+    public function setor()
+    {
+        return $this->belongsTo(Setor::class);
+    }
+
 //    //publications by user
 //    public function scopeByUser($query, $user_id)
 //    {

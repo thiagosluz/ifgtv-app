@@ -29,6 +29,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('permissions', App\Http\Controllers\PermissionController::class);
     Route::resource('pages', App\Http\Controllers\PageController::class);
     Route::post('pages/order', [App\Http\Controllers\PageController::class, 'order'])->name('pages.order');
+    Route::resource('setores', App\Http\Controllers\SetorController::class);
 });
 
 Route::resource('publications', App\Http\Controllers\PublicationController::class);
@@ -42,5 +43,7 @@ Route::post('birthdays-import',[App\Http\Controllers\BirthdayController::class, 
 Route::get('birthdays-modelo',[App\Http\Controllers\BirthdayController::class, 'modelo'])->name('birthdays.modelo');
 Route::get('config', [App\Http\Controllers\ConfigController::class, 'index'])->name('config.index');
 Route::put('config/{config}', [App\Http\Controllers\ConfigController::class, 'update'])->name('config.update');
+
+
 
 

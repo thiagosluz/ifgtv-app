@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\Setor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -40,7 +41,8 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('sistema.users.create', compact('roles'));
+        $setores = Setor::all();
+        return view('sistema.users.create', compact('roles', 'setores'));
     }
 
     /**
@@ -51,17 +53,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'role' => 'required',
+            'setor_id' => 'required',
         ], [
             'name.required' => 'o campo nome é obrigatório',
             'email.required' => 'o campo email é obrigatório',
             'password.required' => 'o campo senha é obrigatório',
             'password.confirmed' => 'as senhas não conferem',
             'role.required' => 'o campo role é obrigatório',
+            'setor_id.required' => 'o campo setor é obrigatório',
         ]);
 
         try {
@@ -69,6 +75,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
+                'setor_id' => $request->setor_id,
             ]);
             //não permitir que a role Super-Admin seja atribuida a outro usuário
             if(in_array(1, $request->role)){
@@ -104,7 +111,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $roles = Role::all();
-        return view('sistema.users.edit', compact('user', 'roles'));
+        $setores = Setor::all();
+        return view('sistema.users.edit', compact('user', 'roles', 'setores'));
     }
 
     /**
@@ -127,12 +135,14 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'password' => 'nullable|string|min:6|confirmed',
             'role' => 'required',
+            'setor_id' => 'required',
         ], [
             'name.required' => 'o campo nome é obrigatório',
             'email.required' => 'o campo email é obrigatório',
             'password.required' => 'o campo senha é obrigatório',
             'password.confirmed' => 'as senhas não conferem',
             'role.required' => 'o campo role é obrigatório',
+            'setor_id.required' => 'o campo setor é obrigatório',
         ]);
 
         try {
@@ -140,6 +150,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => $request->password ? bcrypt($request->password) : $user->password,
+                'setor_id' => $request->setor_id,
             ]);
             //não permitir que a role Super-Admin seja atribuida a outro usuário
 

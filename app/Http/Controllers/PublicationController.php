@@ -66,6 +66,13 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
+        // Verificar se a data de lançamento é maior que a data de expiração ou se a data de expiração esta null
+        if(!is_null($request->data_expiracao)){
+            if ($request->has('scheduled_at') && $request->scheduled_at > $request->data_expiracao) {
+                return redirect()->back()->withInput()->withErrors(['scheduled_at' => 'A data de lançamento não pode posterior que a data de expiração.']);
+            }
+        }
+
         $request->validate([
             'tipo' => 'required',
         ]);
@@ -138,8 +145,10 @@ class PublicationController extends Controller
                 $publication->tipo = 'texto';
                 $publication->imagem = $request->cores;
             }
+            $setor_id = auth()->user()->setor_id;
             $publication->user_id = auth()->user()->id;
             $publication->data_expiracao = $request->data_expiracao;
+            $publication->setor_id = $setor_id;
 
             if ($request->has('scheduled_at')) {
                 // Se uma data de agendamento foi fornecida, agende a postagem
@@ -153,9 +162,10 @@ class PublicationController extends Controller
 
             //enviar email para todos os usuários com permissão de publicar
             $role = Role::with('users')->where('name', 'moderador')->first();
+
             foreach ($role->users as $user) {
-                //if receber_notificacoes is true
-                if ($user->receber_notificacoes) {
+                //if receber_notificacoes is true e o usuário ser do mesmo setor de quem criou a publicação
+                if ($user->receber_notificacoes && ($user->setor_id == $setor_id)) {
                     dispatch(new SendEmailJob($publication, 'Nova Publicação', $user->email));
                 }
             }
@@ -198,14 +208,29 @@ class PublicationController extends Controller
      * @param  \App\Models\Publication  $publication
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(Publication $publication)
+    public function edit($id)
     {
+        $publication = Publication::findOrFail($id);
+
         if ($publication->publicado == 1){
             return redirect()->route('publications.index')->with('error', 'Não é possível editar uma publicação já publicada.');
         }
 
+        //pegar id do usuario logado
         $user = auth()->user();
-        if ( ($user->id == $publication->user_id) || (auth()->user()->can('publications-moderador'))  ) {
+
+        // Verificar se o usuário logado é o autor da publicação
+        if ($publication->user_id != $user->id) {
+            // Verificar se o usuário logado pertence ao mesmo setor do autor da publicação
+            if ($publication->user->setor_id != $user->setor_id) {
+                if (!$user->hasRole('Super-Admin')){
+                    // Se o usuário logado não for o autor da publicação, não pertencer ao mesmo setor, retornar erro
+                    return redirect()->route('publications.index')->with('error', 'Você não tem permissão para editar esta publicação!');
+                }
+            }
+        }
+
+        if ( $user->can('publications-moderador') || $user->hasRole('Super-Admin') ) {
             return view('sistema.publications.edit', compact('publication'));
         }else{
             return redirect()->route('publications.index')->with('error', 'Você não tem permissão para editar esta publicação');
@@ -220,11 +245,31 @@ class PublicationController extends Controller
      * @param  \App\Models\Publication  $publication
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Publication $publication)
+    public function update(Request $request, $id)
     {
+        // Verificar se a data de lançamento é maior que a data de expiração ou se a data de expiração esta null
+        if(!is_null($request->data_expiracao)){
+            if ($request->has('scheduled_at') && $request->scheduled_at > $request->data_expiracao) {
+                return redirect()->back()->withInput()->withErrors(['scheduled_at' => 'A data de lançamento não pode posterior que a data de expiração.']);
+            }
+        }
+
         //pegar id do usuario logado
+        $publication = Publication::findOrFail($id);
         $user = auth()->user();
-        if ( ($user->id == $publication->user_id) || (auth()->user()->can('publications-moderador')) ) {
+
+        // Verificar se o usuário logado é o autor da publicação
+        if ($publication->user_id != $user->id) {
+            // Verificar se o usuário logado pertence ao mesmo setor do autor da publicação
+            if ($publication->user->setor_id != $user->setor_id) {
+                if (!$user->hasRole('Super-Admin')){
+                    // Se o usuário logado não for o autor da publicação, não pertencer ao mesmo setor, retornar erro
+                    return redirect()->route('publications.index')->with('error', 'Você não tem permissão para atualizar esta publicação!');
+                }
+            }
+        }
+
+        if ( $user->can('publications-moderador') ) {
 
             if ($publication->tipo == 'imagem') {
                 $request->validate([
@@ -305,7 +350,7 @@ class PublicationController extends Controller
 
                 $publication->update();
 
-                dispatch(new LogsPublicationJob( $publication->id, auth()->user()->id, 'atualizou a publicação.' ));
+                dispatch(new LogsPublicationJob( $publication->id, $user->id, 'atualizou a publicação.' ));
 
                 return redirect()->route('publications.show', $publication->id)->with('success', 'Publicação atualizada com sucesso!');
 
@@ -331,16 +376,28 @@ class PublicationController extends Controller
      * @param  \App\Models\Publication  $publication
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Publication $publication)
+    public function destroy($id)
     {
 
+        $publication = Publication::findOrFail($id);
         $user = auth()->user();
 
-        if ( ($user->id == $publication->user_id) || (auth()->user()->can('publications-moderador')) ) {
+        // Verificar se o usuário logado é o autor da publicação
+        if ($publication->user_id != $user->id) {
+            // Verificar se o usuário logado pertence ao mesmo setor do autor da publicação
+            if ($publication->user->setor_id != $user->setor_id) {
+                if (!$user->hasRole('Super-Admin')){
+                    // Se o usuário logado não for o autor da publicação, não pertencer ao mesmo setor, retornar erro
+                    return redirect()->route('publications.index')->with('error', 'Você não tem permissão para excluir esta publicação!');
+                }
+            }
+        }
+
+        if ( $user->can('publications-moderador') ) {
 
             try {
                 $publication->delete();
-                dispatch(new LogsPublicationJob( $publication->id, auth()->user()->id, 'Publicação foi apagada.' ));
+                dispatch(new LogsPublicationJob( $publication->id, $user->id, 'Publicação foi apagada.' ));
                 return redirect()->route('publications.index')->with('success', 'deletou a publicação.');
             } catch (\Exception $e) {
                 Log::error('Não foi possível excluir a publicação: ' . $e->getMessage());
@@ -353,8 +410,6 @@ class PublicationController extends Controller
 
         }
 
-
-
     }
 
     /**
@@ -363,20 +418,72 @@ class PublicationController extends Controller
 
     public function post($id)
     {
-        try {
-            $publication = Publication::find($id);
-            $publication->publicado = true;
-            $publication->status = 3;
-            $publication->update();
-            dispatch(new LogsPublicationJob( $publication->id, auth()->user()->id, 'aprovou a publicação.' ));
-            return redirect()->route('publications.index')->with('success', 'Publicação aparecendo nas TVs!');
-        }catch (\Exception $e) {
-            Log::error('Não foi possível publicar a publicação: ' . $e->getMessage());
-            return redirect()->route('publications.index')->with('error', 'Não foi possível publicar!');
+        $publication = Publication::findOrFail($id);
+        $user = auth()->user();
+
+        // Verificar se o usuário logado é o autor da publicação
+        if ($publication->user_id != $user->id) {
+            // Verificar se o usuário logado pertence ao mesmo setor do autor da publicação
+            if ($publication->user->setor_id != $user->setor_id) {
+                if (!$user->hasRole('Super-Admin')){
+                    // Se o usuário logado não for o autor da publicação, não pertencer ao mesmo setor, retornar erro
+                    return redirect()->route('publications.index')->with('error', 'Você não tem permissão para publicar esta publicação!');
+                }
+            }
+        }
+        if ( $user->can('publications-moderador') ) {
+
+            try {
+                $publication->publicado = true;
+                $publication->status = 3;
+                $publication->update();
+                dispatch(new LogsPublicationJob( $publication->id, $user->id, 'aprovou a publicação.' ));
+                return redirect()->route('publications.index')->with('success', 'Publicação aparecendo nas TVs!');
+            }catch (\Exception $e) {
+                Log::error('Não foi possível publicar a publicação: ' . $e->getMessage());
+                return redirect()->route('publications.index')->with('error', 'Não foi possível publicar!');
+            }
+
+        }else{
+            return redirect()->route('publications.index')->with('error', 'Você não tem permissão para publicar esta publicação');
         }
 
     }
 
+    public function despublicar($id)
+    {
+        $publication = Publication::findOrFail($id);
+        $user = auth()->user();
+
+        // Verificar se o usuário logado é o autor da publicação
+        if ($publication->user_id != $user->id) {
+            // Verificar se o usuário logado pertence ao mesmo setor do autor da publicação
+            if ($publication->user->setor_id != $user->setor_id) {
+                if (!$user->hasRole('Super-Admin')){
+                    // Se o usuário logado não for o autor da publicação, não pertencer ao mesmo setor, retornar erro
+                    return redirect()->route('publications.index')->with('error', 'Você não tem permissão para despublicar esta publicação!');
+                }
+            }
+        }
+
+        if ( $user->can('publications-moderador') ) {
+
+            try {
+                $publication->publicado = false;
+                $publication->status = 1;
+                $publication->update();
+                dispatch(new LogsPublicationJob( $publication->id, $user->id, 'despublicou a postagem.' ));
+                return redirect()->route('publications.show', $publication->id)->with('success', 'Postagem despublicada com sucesso!');
+            }catch (\Exception $e) {
+                Log::error('Não foi possível despublicar a postagem: ' . $e->getMessage());
+                return redirect()->route('publications.index')->with('error', 'Não foi possível despublicar!');
+            }
+
+        }else{
+            return redirect()->route('publications.index')->with('error', 'Você não tem permissão para despublicar esta publicação');
+        }
+
+    }
 
     public function imagemText(){
 
@@ -424,14 +531,14 @@ class PublicationController extends Controller
 
         $lines = explode("\n", wordwrap($description, 120)); // break line after 120 characters
 
-        for ($i = 0; $i < count($lines); $i++) {
-            $offset = 820 + ($i * 50); // 50 is line height
-            $img->text($lines[$i], 110, $offset, function ($font) {
-                $font->file(public_path('fonts/Roboto-Black.ttf'));
-                $font->size(30);
-                $font->color('#000000');
-            });
-        }
+//        for ($i = 0; $i < count($lines); $i++) {
+//            $offset = 820 + ($i * 50); // 50 is line height
+//            $img->text($lines[$i], 110, $offset, function ($font) {
+//                $font->file(public_path('fonts/Roboto-Black.ttf'));
+//                $font->size(30);
+//                $font->color('#000000');
+//            });
+//        }
 
         $img->save(public_path('publish/tv/hardik3.png'));
 
@@ -439,30 +546,6 @@ class PublicationController extends Controller
 
     }
 
-
-    public function despublicar($id)
-    {
-        $publication = Publication::findOrFail($id);
-        $user = auth()->user();
-
-        if ( ($user->id == $publication->user_id) || ($user->can('publications-moderador')) ) {
-
-            try {
-                $publication->publicado = false;
-                $publication->status = 1;
-                $publication->update();
-                dispatch(new LogsPublicationJob( $publication->id, $user->id, 'despublicou a postagem.' ));
-                return redirect()->route('publications.show', $publication->id)->with('success', 'Postagem despublicada com sucesso!');
-            }catch (\Exception $e) {
-                Log::error('Não foi possível despublicar a postagem: ' . $e->getMessage());
-                return redirect()->route('publications.index')->with('error', 'Não foi possível despublicar!');
-            }
-
-        }else{
-            return redirect()->route('publications.index')->with('error', 'Você não tem permissão para despublicar esta publicação');
-        }
-
-    }
 
 
 }

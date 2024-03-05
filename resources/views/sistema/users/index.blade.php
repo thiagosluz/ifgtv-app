@@ -31,6 +31,7 @@
                                 <th>@sortablelink('id','ID')</th>
                                 <th>@sortablelink('name','Nome')</th>
                                 <th>@sortablelink('email','Email')</th>
+                                <th>Setor</th>
                                 <th>Regra</th>
                                 <th style="width:300px">Ações</th>
                             </tr>
@@ -41,6 +42,9 @@
                                     <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
+{{--                                    se não for nulo, mostrar o nome do setor --}}
+                                    <td>{{ $user->setor->nome ?? '' }}</td>
+
                                     <td>
                                         @foreach($user->roles as $role)
                                             <span class="badge badge-primary">{{ $role->name }}</span>

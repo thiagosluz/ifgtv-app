@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'receber_notificacoes',
+        'setor_id',
     ];
 
     /**
@@ -47,5 +48,9 @@ class User extends Authenticatable
 
     public $sortable = ['id', 'name', 'email'];
 
+    public function setor()
+    {
+        return $this->belongsTo(Setor::class);
+    }
 
 }

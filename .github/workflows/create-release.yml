@@ -23,8 +23,8 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Correção de algumas rotas de redirecionamento
-            - Melhoria no agendamento de postagens
+            - Criação de setores
+            - Correção das permissões por setor
 
           draft: false
           prerelease: false

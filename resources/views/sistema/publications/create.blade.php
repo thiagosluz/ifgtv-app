@@ -195,39 +195,63 @@
 
                             </div>
 
-                            <div class="col-3">
+                            <div class="row">
 
 
-                                {{-- Data Expiração --}}
-                                <div class="form-group">
-                                    <label for="name">Data de expiração</label>
-                                    <input type="date" name="data_expiracao" class="form-control @error('data_expiracao') is-invalid @enderror" placeholder="Data de expiração" value="{{ old('data_expiracao') }}">
-                                    @error('data_expiracao')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-
-                                {{-- Campo de agendamento --}}
-                                <div class="form-group clearfix">
-                                    <div class="icheck-success d-inline">
-                                        <input class="form-check-input" type="checkbox" id="agendar" name="agendar" value="1">
-                                        <label class="form-check-label" for="agendar">Agendar Publicação</label>
+                                <div class="col-2">
+                                    {{-- Campo de agendamento --}}
+                                    <div class="form-group clearfix">
+                                        <div class="icheck-success d-inline">
+                                            <input class="form-check-input" type="checkbox" id="agendar" name="agendar" value="1">
+                                            <label class="form-check-label" for="agendar">Agendar Publicação</label>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {{-- Campo de data de agendamento --}}
-                                <div class="form-group" id="campo_data_agendamento" style="display: none;">
-                                    <label for="scheduled_at">Data de agendamento</label>
-                                    <input type="date" id="scheduled_at" name="scheduled_at" class="form-control @error('scheduled_at') is-invalid @enderror" value="{{ old('scheduled_at') }}">
-                                    @error('scheduled_at')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
+                                <div class="col-4">
+
+                                    {{-- Campo de data de agendamento --}}
+                                    <div class="form-group" id="campo_data_agendamento" style="display: none;">
+                                        <label for="scheduled_at">Data de agendamento <em> (sua publicação será mostrada a partir da data escolhida)</em></label>
+                                        <input type="date" id="scheduled_at" name="scheduled_at" class="form-control @error('scheduled_at') is-invalid @enderror" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                        @error('scheduled_at')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
-                                    @enderror
+
                                 </div>
 
+
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-2">
+                                    {{-- Checkbox para ativar ou desativar a data de expiração --}}
+                                    <div class="form-group clearfix">
+                                        <div class="icheck-success d-inline">
+                                            <input class="form-check-input" type="checkbox" id="ativar_expiracao" name="ativar_expiracao" value="1">
+                                            <label class="form-check-label" for="ativar_expiracao">Expiração da publicação</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    {{-- Data de Expiração --}}
+                                    <div class="form-group" id="campo_data_expiracao" style="display: none;">
+                                        <label for="name">Data de expiração <em>(depois da data escolhida, sua publicação não passará mais nas TVs)</em></label>
+                                        <input type="date" name="data_expiracao" class="form-control @error('data_expiracao') is-invalid @enderror" placeholder="Data de expiração" value="{{ old('data_expiracao') }}">
+                                        @error('data_expiracao')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+
+
+                                </div>
                             </div>
 
 
@@ -281,6 +305,18 @@
                 $('#campo_data_agendamento').hide();
             }
         });
+
+
+        // Controla a exibição do campo de data de expiração com base no estado do checkbox
+        $('#ativar_expiracao').change(function() {
+            if ($(this).is(":checked")) {
+                $('#campo_data_expiracao').show();
+            } else {
+                $('#campo_data_expiracao').hide();
+            }
+        });
+
+
 
         $(document).on('click', '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();

@@ -24,12 +24,21 @@ class PageSeeder extends Seeder
             'order' => 1,
         ]);
         //criar pagina menu
-        $pagUser = Page::create([
+        $pagPage = Page::create([
             'text' => 'Menus',
             'url' => 'admin/pages',
             'icon' => 'fas fa-fw fa-bars',
             'order' => 2,
             'can' => 'pages-list',
+        ]);
+
+        //criar pagina Setores
+        $pagSetor = Page::create([
+            'text' => 'Setores',
+            'url' => 'admin/setores',
+            'icon' => 'fas fa-fw fa-building',
+            'order' => 11,
+            'can' => 'setores-list',
         ]);
 
         //criar pagina Users

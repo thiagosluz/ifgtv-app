@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Pages')
+@section('title', 'Menu')
 
 @section('content_header')
-    <h1>Pages</h1>
+    <h1>Menu</h1>
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Lista de Menus</h3>
 
-                        <a href="{{ route('pages.create') }}" class="btn btn-success float-right">
+                        <a href="{{ route('pages.create') }}" class="btn btn-success float-right btn-flat">
                             <i class="fas fa-plus-circle"></i>
                             Novo Menu
                         </a>
@@ -47,14 +47,14 @@
                                     <td>{{ $page->can }}</td>
 
                                     <td>
-                                        <a href="{{ route('pages.edit', $page->id) }}" class="btn btn-primary btn-sm">
+                                        <a href="{{ route('pages.edit', $page->id) }}" class="btn btn-primary btn-sm btn-flat">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
 
                                         <form class="form-deletar" action="{{ route('pages.destroy', $page->id) }}" method="POST" style="display: inline;">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm btn-deletar">
+                                            <button type="submit" class="btn btn-danger btn-sm btn-deletar btn-flat">
                                                 <i class="fas fa-trash"></i> Deletar
                                             </button>
                                         </form>

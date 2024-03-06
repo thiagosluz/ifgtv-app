@@ -113,5 +113,14 @@ class PageSeeder extends Seeder
             'can' => 'backup-list',
         ]);
 
+        //criar pagina de relatórios
+        $pagReport = Page::create([
+            'text' => 'Relatórios',
+            'url' => 'reports',
+            'icon' => 'fas fa-fw fa-chart-bar',
+            'order' => 12,
+//            'can' => 'reports-list',
+        ]);
+
     }
 }

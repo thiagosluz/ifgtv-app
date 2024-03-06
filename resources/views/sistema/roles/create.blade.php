@@ -52,8 +52,8 @@
 
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success float-right">Salvar</button>
-                            <a href="{{ route('roles.index') }}" class="btn btn-default">Voltar</a>
+                            <button type="submit" class="btn btn-success float-right btn-flat">Salvar</button>
+                            <a href="{{ route('roles.index') }}" class="btn btn-default btn-flat">Voltar</a>
                         </div>
                     </div>
                 </form>

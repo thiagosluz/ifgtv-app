@@ -82,7 +82,7 @@
 
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success float-right">Atualizar</button>
+                            <button type="submit" class="btn btn-success float-right btn-flat">Atualizar</button>
 {{--                            <a href="{{ route('users.index') }}" class="btn btn-default">Voltar</a>--}}
                         </div>
                     </div>

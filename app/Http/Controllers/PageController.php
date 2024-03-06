@@ -38,7 +38,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        //
+        return view('sistema.pages.create');
     }
 
     /**
@@ -49,7 +49,27 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'order' => 'required|numeric',
+            'text' => 'required|string',
+            'url' => 'required|string',
+            'icon' => 'required|string',
+            'can' => 'string',
+        ]);
+
+        // Crie uma nova instância de Page com os dados do formulário
+        $page = new Page();
+        $page->order = $request->order;
+        $page->text = $request->text;
+        $page->url = $request->url;
+        $page->icon = $request->icon;
+        $page->can = $request->can;
+
+        // Salve a nova página no banco de dados
+        $page->save();
+
+        // Redirecione de volta para a página de listagem de páginas com uma mensagem de sucesso
+        return redirect()->route('pages.index')->with('success', 'Página criada com sucesso!');
     }
 
     /**

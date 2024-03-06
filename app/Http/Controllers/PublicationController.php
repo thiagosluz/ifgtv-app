@@ -42,9 +42,33 @@ class PublicationController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $publications = Publication::sortable(['id' => 'desc'])->with('user')->paginate(10);
+
+//        dd($request->all());
+       // $publications = Publication::sortable(['id' => 'desc'])->with('user')->paginate(10);
+
+        $query = Publication::query();
+
+        if ($request->has('titulo') && !is_null($request->titulo)) {
+            $query->where('titulo', 'like', '%' . $request->titulo . '%');
+        }
+
+        if ($request->has('status') && !is_null($request->status)) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->has('tipo') && !is_null($request->tipo)) {
+            $query->where('tipo', $request->tipo );
+        }
+
+        if ($request->has('autor') && !is_null($request->autor)) {
+            $query->whereHas('user', function($userQuery) use ($request) {
+                $userQuery->where('name', 'like', '%' . $request->autor . '%');
+            });
+        }
+
+        $publications = $query->sortable(['id' => 'desc'])->with('user')->paginate(10);
         return view('sistema.publications.index', compact('publications'));
     }
 

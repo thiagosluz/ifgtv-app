@@ -9,6 +9,68 @@
 @section('content')
 
     <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Filtros</h3>
+                    </div>
+                    <form action="{{ route('publications.index') }}" method="GET">
+                    <div class="card-body">
+
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input type="text" name="titulo" class="rounded-0 form-control" placeholder="Título" value="{{ request()->get('titulo') }}">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <select name="tipo" class="form-control rounded-0">
+                                        <option value="">Tipo</option>
+                                        <option value="texto" {{ request()->get('tipo') === 'texto' ? 'selected' : '' }}>Texto</option>
+                                        <option value="imagem" {{ request()->get('tipo') === 'imagem' ? 'selected' : '' }}>Imagem</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <input type="text" name="autor" class="form-control rounded-0" placeholder="Autor" value="{{ request()->get('autor') }}">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="status" class="form-control rounded-0">
+                                        <option value="">Status</option>
+                                        <option value="0" {{ request()->get('status') === '0' ? 'selected' : '' }}>Criado</option>
+                                        <option value="1" {{ request()->get('status') === '1' ? 'selected' : '' }}>Em Revisão</option>
+                                        <option value="3" {{ request()->get('status') === '3' ? 'selected' : '' }}>Publicado</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-sm btn-flat float-right">
+                                    <i class="fas fa-search"></i>
+                                    Filtrar
+                                </button>
+                                <a href="{{ route('publications.index') }}" class="btn btn-outline-secondary btn-sm btn-flat">
+                                    Limpar Filtros
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-primary card-outline">
@@ -16,7 +78,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Lista de Publicações</h3>
 
-                        <a href="{{ route('publications.create') }}" class="btn btn-success float-right">
+                        <a href="{{ route('publications.create') }}" class="btn btn-success float-right btn-flat">
                             <i class="fas fa-plus-circle"></i>
                             Nova Publicação
                         </a>
@@ -72,7 +134,7 @@
                                     </td>
                                     <td>
 
-                                        <a href="{{ route('publications.show', $publication->id) }}" class="btn btn-info btn-sm">
+                                        <a href="{{ route('publications.show', $publication->id) }}" class="btn btn-info btn-sm btn-flat">
                                             <i class="fas fa-eye"></i> Detalhes
                                         </a>
 {{--                                        <a href="{{ route('publications.edit', $publication->id) }}" class="btn btn-primary btn-sm">--}}

@@ -23,7 +23,6 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Geração de relatorios por usuário ou por setor
-            - correção de layout dos botões para flat
+            - add de Paginas de erros personalizadas
           draft: false
           prerelease: false

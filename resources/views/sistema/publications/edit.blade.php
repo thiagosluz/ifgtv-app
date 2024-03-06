@@ -233,9 +233,9 @@
 
                         </div>
                         <div class="card-footer">
-                            <button id="btn_submit" type="submit" class="btn btn-success float-right">Atualizar</button>
+                            <button id="btn_submit" type="submit" class="btn btn-success float-right btn-flat">Atualizar</button>
                             {{-- btn waiting --}}
-                            <button type="button" class="btn btn-success float-right" id="btn_waiting" style="display: none">
+                            <button type="button" class="btn btn-success float-right btn-flat" id="btn_waiting" style="display: none">
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 Salvando...
                             </button>

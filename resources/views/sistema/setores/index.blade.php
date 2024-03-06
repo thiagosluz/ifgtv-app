@@ -16,7 +16,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Lista de Setores</h3>
 
-                        <a href="{{ route('setores.create') }}" class="btn btn-success float-right">
+                        <a href="{{ route('setores.create') }}" class="btn btn-success float-right btn-flat">
                             <i class="fas fa-plus-circle"></i>
                             Novo Setor
                         </a>
@@ -40,14 +40,14 @@
                                     <td>{{ $setor->nome }}</td>
 
                                     <td>
-                                        <a href="{{ route('setores.edit', $setor->id) }}" class="btn btn-primary btn-sm">
+                                        <a href="{{ route('setores.edit', $setor->id) }}" class="btn btn-primary btn-sm btn-flat">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
 
                                         <form class="form-deletar" action="{{ route('setores.destroy', $setor->id) }}" method="POST" style="display: inline;">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm btn-deletar">
+                                            <button type="submit" class="btn btn-danger btn-sm btn-deletar btn-flat">
                                                 <i class="fas fa-trash"></i> Deletar
                                             </button>
                                         </form>

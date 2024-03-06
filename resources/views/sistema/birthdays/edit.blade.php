@@ -63,8 +63,8 @@
 
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-success float-right">Atualizar</button>
-                            <a href="{{ route('birthdays.index') }}" class="btn btn-default">Voltar</a>
+                            <button type="submit" class="btn btn-success float-right btn-flat">Atualizar</button>
+                            <a href="{{ route('birthdays.index') }}" class="btn btn-default btn-flat">Voltar</a>
                         </div>
                     </div>
                 </form>

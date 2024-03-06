@@ -44,6 +44,9 @@ Route::get('birthdays-modelo',[App\Http\Controllers\BirthdayController::class, '
 Route::get('config', [App\Http\Controllers\ConfigController::class, 'index'])->name('config.index');
 Route::put('config/{config}', [App\Http\Controllers\ConfigController::class, 'update'])->name('config.update');
 
+Route::get('/reports', [App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+Route::post('/reports/generate', [App\Http\Controllers\ReportController::class, 'generate'])->name('reports.generate');
+
 
 
 

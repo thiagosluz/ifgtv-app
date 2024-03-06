@@ -16,7 +16,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Lista de Regras</h3>
 
-                        <a href="{{ route('roles.create') }}" class="btn btn-success float-right">
+                        <a href="{{ route('roles.create') }}" class="btn btn-success float-right btn-flat">
                             <i class="fas fa-plus-circle"></i>
                             Nova Regra
                         </a>
@@ -38,17 +38,17 @@
                                     <td>{{ $role->name }}</td>
 
                                     <td>
-                                        <a href="{{ route('roles.show', $role->id) }}" class="btn btn-info btn-sm">
+                                        <a href="{{ route('roles.show', $role->id) }}" class="btn btn-info btn-sm btn-flat">
                                             <i class="fas fa-eye"></i> Visualizar
                                         </a>
-                                        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-primary btn-sm">
+                                        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-primary btn-sm btn-flat">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
 
                                         <form class="form-deletar" action="{{ route('roles.destroy', $role->id) }}" method="POST" style="display: inline;">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm btn-deletar">
+                                            <button type="submit" class="btn btn-danger btn-sm btn-deletar btn-flat">
                                                 <i class="fas fa-trash"></i> Deletar
                                             </button>
                                         </form>

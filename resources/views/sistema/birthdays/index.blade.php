@@ -28,7 +28,7 @@
                                     placeholder="Nome da pessoa..."
                                     aria-label="Search"
                                     aria-describedby="button-addon2">
-                                <button class="btn btn-success" type="submit" id="button-addon2">Pesquisar</button>
+                                <button class="btn btn-success btn-flat" type="submit" id="button-addon2">Pesquisar</button>
                             </div>
                         </form>
 
@@ -48,7 +48,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Lista de aniversários</h3>
 
-                        <a href="{{ route('birthdays.create') }}" class="btn btn-success float-right">
+                        <a href="{{ route('birthdays.create') }}" class="btn btn-success float-right btn-flat">
                             <i class="fas fa-plus-circle"></i>
                             Novo aniversariante
                         </a>

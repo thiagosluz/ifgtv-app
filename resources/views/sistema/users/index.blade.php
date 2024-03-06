@@ -16,7 +16,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Lista de Usuários</h3>
 
-                        <a href="{{ route('users.create') }}" class="btn btn-success float-right">
+                        <a href="{{ route('users.create') }}" class="btn btn-success float-right btn-flat">
                             <i class="fas fa-plus-circle"></i>
                             Novo Usuário
                         </a>
@@ -57,14 +57,14 @@
 {{--                                            <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-sm">--}}
 {{--                                                <i class="fas fa-eye"></i> Visualizar--}}
 {{--                                            </a>--}}
-                                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">
+                                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm btn-flat">
                                                 <i class="fas fa-edit"></i> Editar
                                             </a>
 
                                             <form class="form-deletar" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button type="submit" class="btn btn-danger btn-sm btn-deletar">
+                                                <button type="submit" class="btn btn-danger btn-sm btn-deletar btn-flat">
                                                     <i class="fas fa-trash"></i> Deletar
                                                 </button>
                                             </form>

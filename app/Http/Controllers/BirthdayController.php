@@ -30,6 +30,8 @@ class BirthdayController extends Controller
      */
     public function index(Request $request)
     {
+
+       // dd($request->all());
         $query = Birthday::query();
 
 
@@ -39,14 +41,14 @@ class BirthdayController extends Controller
         }
 
         // Filtrando por intervalo de datas se fornecido
-        if ($request->has('start_date')) {
+        if ($request->has('start_date') && is_null($request->input('start_date')) == false) {
             $startDate = Carbon::createFromFormat('d/m/Y', $request->input('start_date'));
 
             $query->whereMonth('birthday', $startDate->month)
                 ->whereDay('birthday', '>=',$startDate->day);
         }
 
-        if ($request->has('end_date')) {
+        if ($request->has('end_date') && is_null($request->input('end_date')) == false) {
 
             $endDate = Carbon::createFromFormat('d/m/Y', $request->input('end_date'));
             $query->whereMonth('birthday', $endDate->month)
@@ -194,14 +196,14 @@ class BirthdayController extends Controller
         }
 
         // Filtrando por intervalo de datas se fornecido
-        if ($request->has('start_date')) {
+        if ($request->has('start_date') && is_null($request->input('start_date')) == false) {
             $startDate = Carbon::createFromFormat('d/m/Y', $request->input('start_date'));
 
             $query->whereMonth('birthday', $startDate->month)
                 ->whereDay('birthday', '>=',$startDate->day);
         }
 
-        if ($request->has('end_date')) {
+        if ($request->has('end_date') && is_null($request->input('end_date')) == false) {
 
             $endDate = Carbon::createFromFormat('d/m/Y', $request->input('end_date'));
             $query->whereMonth('birthday', $endDate->month)

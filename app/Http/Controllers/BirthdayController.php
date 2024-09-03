@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BirthdaysExport;
 use App\Imports\BirthdayImport;
 use App\Jobs\BirthdayImportJob;
 use App\Models\Birthday;
@@ -27,16 +28,34 @@ class BirthdayController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
-        if($request->filled('search')){
-            $birthdays = Birthday::search($request->search)
-                ->within('name_desc')
-                ->paginate(10);
-        }else{
-            $birthdays = Birthday::sortable(['name' => 'asc'])->paginate(10);
+        $query = Birthday::query();
+
+
+        // Filtrando por nome se fornecido
+        if ($request->has('search_name') && $request->input('search_name') != '') {
+            $query->where('name', 'like', '%' . $request->input('search_name') . '%');
         }
 
+        // Filtrando por intervalo de datas se fornecido
+        if ($request->has('start_date')) {
+            $startDate = Carbon::createFromFormat('d/m/Y', $request->input('start_date'));
+
+            $query->whereMonth('birthday', $startDate->month)
+                ->whereDay('birthday', '>=',$startDate->day);
+        }
+
+        if ($request->has('end_date')) {
+
+            $endDate = Carbon::createFromFormat('d/m/Y', $request->input('end_date'));
+            $query->whereMonth('birthday', $endDate->month)
+                ->whereDay('birthday', '<=',$endDate->day);
+        }
+
+       // dd($query->toSql());
+
+        $birthdays = $query->sortable()->paginate(10);
 
         return view('sistema.birthdays.index', compact('birthdays'));
     }
@@ -155,6 +174,44 @@ class BirthdayController extends Controller
     public function modelo()
     {
         return response()->download(public_path('csv/aniversarios.csv'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $birthdays = Birthday::where('name', 'LIKE', "%{$search}%")->get();
+
+        return response()->json($birthdays);
+    }
+
+    public function export(Request $request)
+    {
+        $query = Birthday::query();
+
+        // Filtrando por nome se fornecido
+        if ($request->has('search_name') && $request->input('search_name') != '') {
+            $query->where('name', 'like', '%' . $request->input('search_name') . '%');
+        }
+
+        // Filtrando por intervalo de datas se fornecido
+        if ($request->has('start_date')) {
+            $startDate = Carbon::createFromFormat('d/m/Y', $request->input('start_date'));
+
+            $query->whereMonth('birthday', $startDate->month)
+                ->whereDay('birthday', '>=',$startDate->day);
+        }
+
+        if ($request->has('end_date')) {
+
+            $endDate = Carbon::createFromFormat('d/m/Y', $request->input('end_date'));
+            $query->whereMonth('birthday', $endDate->month)
+                ->whereDay('birthday', '<=',$endDate->day);
+        }
+
+
+        $birthdays = $query->get();
+
+        return Excel::download(new BirthdaysExport($birthdays), 'aniversariantes.xlsx');
     }
 
 }

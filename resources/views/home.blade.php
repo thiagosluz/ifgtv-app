@@ -114,6 +114,13 @@
     @include('layouts.erros_toast')
 
     <script type="text/javascript">
+
+        // // Rótulos dos meses em português
+        // var labels = [
+        //     'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+        //     'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        // ];
+
         var labels = {{ Js::from($labels) }};
         var users = {{ Js::from($data) }};
 

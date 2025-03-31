@@ -23,6 +23,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - add de Paginas de erros personalizadas
+            - Correção de bugs
+            - alteração da licença e readme
           draft: false
           prerelease: false

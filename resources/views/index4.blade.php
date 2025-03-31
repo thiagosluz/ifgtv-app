@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
-<html lang=“pt-br”>
+<html lang="pt-br">
 <head>
     <title>IFG.TV</title>
     <meta charset="utf-8">
-    <meta content=“width=device-width, initial-scale=1, maximum-scale=1” name=“viewport”>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
     <style>
         * {
             margin: 0;
@@ -13,6 +12,38 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #clock {
+            position: fixed;
+            bottom: 1px;
+            right: 1px;
+            background: rgba(26, 34, 56, 0.85);  /* #1a2238 com 85% de opacidade */
+            color: #ffffff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-family: 'Digital-7', monospace;
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #clock .time {
+            font-size: 38px;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        #clock .date {
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        @font-face {
+            font-family: 'Digital-7';
+            src: url('{{ asset("fonts/digital-7.ttf") }}') format('truetype');
         }
 
         #main {
@@ -111,6 +142,10 @@
     </style>
 </head>
 <body>
+<div id="clock">
+    <div class="time"></div>
+    <div class="date"></div>
+</div>
 <div id="main">
     <div id="news-panel">
 
@@ -168,6 +203,35 @@
     <ul id="pagination"><!-- pagination goes here --></ul>
 </div>
 <script>
+    // Função para atualizar o relógio
+    function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        // Array com os nomes dos dias da semana
+        const weekDays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+        // Array com os nomes dos meses
+        const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                       'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+        // Formatando a data
+        const dayName = weekDays[now.getDay()];
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = months[now.getMonth()];
+        const year = now.getFullYear();
+
+        // Atualizando o relógio
+        document.querySelector('#clock .time').textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+        document.querySelector('#clock .date').textContent = `${dayName}, ${day} ${month} ${year}`;
+    }
+
+    // Atualiza o relógio a cada segundo
+    updateClock();
+    setInterval(updateClock, 1000);
 
     // Configurações
     var secondsPerPage = {{ $config->slide_time }}; // tempo em segundos para cada página

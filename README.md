@@ -40,6 +40,17 @@ git clone [url-do-repositorio]
 cd ifgtv-app
 ```
 
+> **Observação:** Após clonar o repositório, para utilizar o Sail pela primeira vez, execute o comando abaixo para instalar as dependências do Composer:
+> 
+> ```bash
+> docker run --rm \
+>     -u "$(id -u):$(id -g)" \
+>     -v "$(pwd):/var/www/html" \
+>     -w /var/www/html \
+>     laravelsail/php81-composer:latest \
+>     composer install --ignore-platform-reqs
+> ```
+
 3. Copie o arquivo de ambiente
 ```bash
 cp .env.example .env
@@ -62,9 +73,8 @@ cp .env.example .env
 
 7. Execute as migrações
 ```bash
-./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan migrate --seed
 ```
-
 ## 🔧 Configuração
 
 Para configurar o tempo de transição dos slides, ajuste a variável `slide_time` no arquivo de configuração ou no banco de dados.
@@ -93,3 +103,4 @@ Contribuições são sempre bem-vindas! Para contribuir:
 ## 📝 Licença
 
 Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+

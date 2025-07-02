@@ -82,54 +82,70 @@
                             <a href="{{ route('birthdays.create') }}" class="btn btn-success btn-flat">
                                 <i class="fas fa-plus-circle"></i> Novo aniversariante
                             </a>
+                            <form action="{{ route('birthdays.runPostAniversario') }}" method="POST" id="form-post-aniversario" style="display:inline-block;">
+                                @csrf
+                                <button type="button" id="btn-post-aniversario" class="btn btn-warning btn-flat">
+                                    <i class="fas fa-bolt"></i> Gerar Post de Aniversariantes (Manual)
+                                </button>
+                            </form>
                         </div>
                     </div>
 
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table id="example1" class="table table-striped table-hover">
-                            <thead>
-                            <tr>
-                                @if(request()->get('search'))
-                                    <th>Nome</th>
-                                    <th>Aniversário</th>
-                                    <th style="width:300px">Ações</th>
-                                @else
-                                    <th>@sortablelink('name','Nome')</th>
-                                    <th>@sortablelink('birthday','Aniversário')</th>
-                                    <th style="width:300px">Ações</th>
-                                @endif
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @php
-                                \Carbon\Carbon::setlocale('pt_BR');
-                            @endphp
-
-                            @forelse($birthdays as $birthday)
+                        <form id="mass-delete-form" action="{{ route('birthdays.destroyMany') }}" method="POST">
+                            @csrf
+                            <div class="mb-2">
+                                <button type="button" id="btn-mass-delete" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Deletar Selecionados
+                                </button>
+                            </div>
+                            <table id="example1" class="table table-striped table-hover">
+                                <thead>
                                 <tr>
-                                    <td>{{ $birthday->name }}</td>
-                                    <td>{{ $birthday->birthday->translatedFormat('l\, j \de F') }}</td>
-                                    <td>
-                                        <a href="{{ route('birthdays.edit', $birthday->id) }}" class="btn btn-primary btn-sm">
-                                            <i class="fas fa-edit"></i> Editar
-                                        </a>
-                                        <form class="form-deletar" action="{{ route('birthdays.destroy', $birthday->id) }}" method="POST" style="display: inline;">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm btn-deletar">
-                                                <i class="fas fa-trash"></i> Deletar
-                                            </button>
-                                        </form>
-                                    </td>
+                                    <th><input type="checkbox" id="select-all"></th>
+                                    @if(request()->get('search'))
+                                        <th>Nome</th>
+                                        <th>Aniversário</th>
+                                        <th style="width:300px">Ações</th>
+                                    @else
+                                        <th>@sortablelink('name','Nome')</th>
+                                        <th>@sortablelink('birthday','Aniversário')</th>
+                                        <th style="width:300px">Ações</th>
+                                    @endif
                                 </tr>
-                            @empty
-                                <tr class="text-center">
-                                    <td colspan="3">Nenhum registro encontrado!</td>
-                                </tr>
-                            @endforelse
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @php
+                                    \Carbon\Carbon::setlocale('pt_BR');
+                                @endphp
+
+                                @forelse($birthdays as $birthday)
+                                    <tr>
+                                        <td><input type="checkbox" name="ids[]" value="{{ $birthday->id }}"></td>
+                                        <td>{{ $birthday->name }}</td>
+                                        <td>{{ $birthday->birthday->translatedFormat('l, j \de F') }}</td>
+                                        <td>
+                                            <a href="{{ route('birthdays.edit', $birthday->id) }}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </a>
+                                            <form class="form-deletar" action="{{ route('birthdays.destroy', $birthday->id) }}" method="POST" style="display: inline;">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm btn-deletar">
+                                                    <i class="fas fa-trash"></i> Deletar
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr class="text-center">
+                                        <td colspan="4">Nenhum registro encontrado!</td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                     <!-- /.card-body -->
 
@@ -159,7 +175,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
     @include('layouts.delete_sweetalert')
     @include('layouts.erros_toast')
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
         // Inicializando os datepickers
         $('#start-date, #end-date').datepicker({
@@ -167,6 +183,60 @@
             language: 'pt-BR',
             autoclose: true,
             todayHighlight: true
+        });
+
+        document.getElementById('select-all').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('input[name="ids[]"]');
+            for (const cb of checkboxes) {
+                cb.checked = this.checked;
+            }
+        });
+
+        // SweetAlert para deletar em massa
+        document.getElementById('btn-mass-delete').addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = document.getElementById('mass-delete-form');
+            if (document.querySelectorAll('input[name="ids[]"]:checked').length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Selecione pelo menos um aniversariante!',
+                    showConfirmButton: true
+                });
+                return;
+            }
+            Swal.fire({
+                title: 'Você tem certeza?',
+                text: 'Você não poderá reverter isso!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, deletar!',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+
+        // SweetAlert para gerar posts de aniversariantes
+        document.getElementById('btn-post-aniversario').addEventListener('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Gerar posts de aniversariantes do dia?',
+                text: 'Isso irá excluir e recriar os posts de aniversário do dia!',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, gerar!',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form-post-aniversario').submit();
+                }
+            });
         });
     </script>
 @stop

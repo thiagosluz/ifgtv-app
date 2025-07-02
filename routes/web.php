@@ -43,7 +43,8 @@ Route::post('birthdays-import',[App\Http\Controllers\BirthdayController::class, 
 Route::get('birthdays-modelo',[App\Http\Controllers\BirthdayController::class, 'modelo'])->name('birthdays.modelo');
 Route::get('/search-birthdays', [App\Http\Controllers\BirthdayController::class, 'search'])->name('birthdays.search');
 Route::get('/birthdays-export', [App\Http\Controllers\BirthdayController::class, 'export'])->name('birthdays.export');
-
+Route::post('birthdays/destroy-many', [App\Http\Controllers\BirthdayController::class, 'destroyMany'])->name('birthdays.destroyMany');
+Route::post('birthdays/run-post-aniversario', [App\Http\Controllers\BirthdayController::class, 'runPostAniversario'])->name('birthdays.runPostAniversario');
 
 Route::get('config', [App\Http\Controllers\ConfigController::class, 'index'])->name('config.index');
 Route::put('config/{config}', [App\Http\Controllers\ConfigController::class, 'update'])->name('config.update');

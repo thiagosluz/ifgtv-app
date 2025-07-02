@@ -23,7 +23,7 @@ jobs:
           release_name: ${{ github.ref }}
           body: |
             Mudanças nesta versão:
-            - Correção de bugs
-            - alteração da licença e readme
+            - Alteração na forma que deleta os aniversários
+            - Geração manual de aniversários do dia atual
           draft: false
           prerelease: false

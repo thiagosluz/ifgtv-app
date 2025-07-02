@@ -32,6 +32,11 @@ class PostAniversarioCron extends Command
      */
     public function handle()
     {
+        // Excluir publicações de aniversário do dia para evitar duplicidade
+        Publication::where('imagem', 'aniversario')
+            ->whereDate('data_publicacao', now()->toDateString())
+            ->delete();
+
         $birthdays = Birthday::whereDay('birthday', now()->day)
             ->whereMonth('birthday', now()->month)
             ->get();

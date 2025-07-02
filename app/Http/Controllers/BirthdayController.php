@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Artisan;
 
 class BirthdayController extends Controller
 {
@@ -214,6 +215,42 @@ class BirthdayController extends Controller
         $birthdays = $query->get();
 
         return Excel::download(new BirthdaysExport($birthdays), 'aniversariantes.xlsx');
+    }
+
+    /**
+     * Remove múltiplos aniversariantes do banco de dados.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroyMany(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:birthdays,id',
+        ]);
+
+        try {
+            Birthday::whereIn('id', $request->ids)->delete();
+            return redirect()->route('birthdays.index')->with('success', 'Aniversariantes excluídos com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('birthdays.index')->with('error', 'Erro ao excluir aniversariantes!');
+        }
+    }
+
+    /**
+     * Executa manualmente o comando de post de aniversariantes do dia.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function runPostAniversario()
+    {
+        try {
+            Artisan::call('post:aniversario');
+            return redirect()->route('birthdays.index')->with('success', 'Comando de post de aniversariantes executado com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('birthdays.index')->with('error', 'Erro ao executar o comando de post de aniversariantes!');
+        }
     }
 
 }

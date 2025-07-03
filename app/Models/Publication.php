@@ -18,7 +18,7 @@ class Publication extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(\App\Models\User::class);
     }
 
     public function scopePublicado($query)
@@ -41,7 +41,7 @@ class Publication extends Model
 //    relações com History
     public function history()
     {
-        return $this->hasMany('App\Models\History')->orderBy('created_at', 'desc');
+        return $this->hasMany(\App\Models\History::class)->orderBy('created_at', 'desc');
     }
 
     public function setor()
